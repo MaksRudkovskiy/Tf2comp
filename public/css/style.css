@@ -1,0 +1,27 @@
+*
+{
+    color: #EBE3CB;
+    font-family: 'TF2 Build', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'TF2 Build', sans-serif;
+    font-size: 24px;
+}
+a
+{
+    font-family: 'TF2 Build', sans-serif;
+    font-size: 24px;
+}
+
+.border-tf
+{
+    border: 1px solid black;
+}
+
+.border-tf-nav
+{
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+}

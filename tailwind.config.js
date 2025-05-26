@@ -1,0 +1,58 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+    ],
+
+    theme: {
+        extend: {
+            backgroundColor: {
+                // Задний фон
+                'back': '#1D1C1A',
+                // Цвет основного заднего блока
+                'main': '#141414',
+                // Цвет переднего блока
+                'front': '#0E0E0E',
+                // Кнопки
+                'buttons': '#0A0A0A',
+                // Средние блоки
+                'block': '#131313',
+            },
+            colors: {
+                custom: {
+                    'text-hover': '#4C7285',
+                    'primary': '#EBE3CB',
+                    '202124': '#202124',
+                    'EDF1FF': '#EDF1FF',
+                    'C1CFFF': '#C1CFFF',
+                    '4D52BC': '#4D52BC',
+                    '2d2f37': '#2d2f37'
+                }
+            },
+            fontFamily: {
+                'tf2build': ['TF2Build', ...defaultTheme.fontFamily.sans],
+                'tf2icons': ['TF2 Character Icons', ...defaultTheme.fontFamily.sans],
+                'tf2icons2': ['Hypnotize Icons Master', ...defaultTheme.fontFamily.sans],
+                'tf2icons3': ['TF2 Icons', ...defaultTheme.fontFamily.sans],
+            },
+            hover: {
+                'text-hover': '#4C7285',
+                '4D52BC': '#4D52BC',
+            },
+            transitionDuration: {
+                '0.5s': '0.5s',
+                '0.3s': '0.3s',
+            },
+            border: {
+                '4D52BC': '#4D52BC',
+            }
+        },
+    },
+
+    plugins: [forms],
+};
