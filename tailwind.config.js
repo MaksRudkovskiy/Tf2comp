@@ -31,10 +31,12 @@ export default {
                     'EDF1FF': '#EDF1FF',
                     'C1CFFF': '#C1CFFF',
                     '4D52BC': '#4D52BC',
-                    '2d2f37': '#2d2f37'
+                    '2d2f37': '#2d2f37',
+                    'EBE3CB': '#EBE3CB',
                 }
             },
             fontFamily: {
+                'tf2': ['TF2', ...defaultTheme.fontFamily.sans],
                 'tf2build': ['TF2Build', ...defaultTheme.fontFamily.sans],
                 'tf2icons': ['TF2 Character Icons', ...defaultTheme.fontFamily.sans],
                 'tf2icons2': ['Hypnotize Icons Master', ...defaultTheme.fontFamily.sans],
@@ -50,6 +52,7 @@ export default {
             },
             border: {
                 '4D52BC': '#4D52BC',
+                'EBE3CB': '#EBE3CB',
             }
         },
     },
