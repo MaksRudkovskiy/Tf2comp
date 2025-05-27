@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'TF2 Build';
+    font-family: 'TF2Build';
     src: url('../fonts/TF2Build.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
@@ -12,6 +12,13 @@
 @font-face {
     font-family: 'TF2';
     src: url('../fonts/TF2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'TF2Secondary';
+    src: url('../fonts/TF2Secondary.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

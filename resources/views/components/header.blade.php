@@ -45,16 +45,26 @@
                                 </div>
 
                                 <!-- Аватар -->
-                                <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->avatar) ?? asset('content/img/pictures/Profile.svg') }}" alt="User Avatar" class="rounded border-tf h-24 w-24 mx-auto my-6 ">
+                                @if(Auth::user()->avatar && strlen(Auth::user()->avatar) > 0)
+                                    <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->avatar) }}"
+                                         alt="User Avatar"
+                                         class="rounded border-tf h-24 w-24 mx-auto my-6">
+                                @else
+                                <div class="rounded border-tf h-24 w-24 mx-auto my-6 bg-custom-EBE3CB flex items-center justify-center">
+                                <span class="text-4xl font-bold text-gray-600">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </span>
+                                    </div>
+                                @endif
 
                                 <!-- Имя пользователя -->
-                                <div class="px-4 text-lg mb-6 font-bold text-center">
+                                <div class="px-4 text-lg mb-6 text-center">
                                     {{ Auth::user()->name }}
                                 </div>
 
                                 <!-- Кнопка редактирования профиля -->
                                 <a href="{{ route('profile.edit') }}">
-                                    <button class="px-4 py-1.5 text-lg text-md w-52 bg-front rounded border-tf hover:text-custom-text-hover">Редактировать</button>
+                                    <button class="px-4 py-1.5 text-lg text-md w-52 bg-main rounded border-tf hover:text-custom-text-hover">Редактировать</button>
                                 </a>
 
                                 <!-- Кнопка выхода -->

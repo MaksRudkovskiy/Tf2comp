@@ -1,5 +1,7 @@
 <x-app-layout>
 
+    <x-slot name="pageTitle">Персонаж</x-slot>
+
     <div class="w-3/4 mx-auto flex justify-between my-10">
 
         <img src="" alt="">

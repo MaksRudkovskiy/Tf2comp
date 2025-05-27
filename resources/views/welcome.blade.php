@@ -21,8 +21,8 @@
 
                 <div class="flex justify-between px-32 mb-12 py-6">
 
-                    <a href="{{route('items')}}" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons2">P</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Оружия</h2> </a>
-                    <a href="#" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons2">_</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Баги и фишки</h2> </a>
+                    <a href="{{route('items')}}" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons2">P</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Предметы</h2> </a>
+                    <a href="{{route('bugs_list')}}" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons2">_</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Баги и фишки</h2> </a>
                     <a href="#" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons2">M</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Игровые режимы</h2> </a>
                     <a href="#" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons3">;</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">История игры</h2> </a>
                     <a href="#" class="character text-8xl"> <h2 class="hover:text-custom-text-hover text-center font-tf2icons3">.</h2>  <h2 class="text-2xl mt-5 hover:text-custom-text-hover">Консоль</h2> </a>

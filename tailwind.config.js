@@ -24,6 +24,7 @@ export default {
                 'block': '#131313',
                 // Каталоговые блоки
                 'catalog': '#262222',
+                'catalog_selected': '#B1A996',
             },
             colors: {
                 custom: {
@@ -35,14 +36,17 @@ export default {
                     '4D52BC': '#4D52BC',
                     '2d2f37': '#2d2f37',
                     'EBE3CB': '#EBE3CB',
+                    'A1A1A1': '#A1A1A1',
                     'danger': '#380303',
+                    'positive': '#A9CAF5',
                     'ret': '#9E2E2C',
                     'blu': '#4D758E',
+                    'uncommon': '#FFDC00',
 
                 }
             },
             fontFamily: {
-                'tf2': ['TF2', ...defaultTheme.fontFamily.sans],
+                'tf2': ['TF2Secondary', ...defaultTheme.fontFamily.sans],
                 'tf2build': ['TF2Build', ...defaultTheme.fontFamily.sans],
                 'tf2icons': ['TF2 Character Icons', ...defaultTheme.fontFamily.sans],
                 'tf2icons2': ['Hypnotize Icons Master', ...defaultTheme.fontFamily.sans],
