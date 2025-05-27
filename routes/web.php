@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MainController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\BugsController;
-use App\Http\Controllers\ItemController;
+
+use App\Http\Controllers\{ItemController, BugsController, ArticleController, MainController, ProfileController, ModesController, MistakeController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index'])->name('main_page');
@@ -12,6 +9,8 @@ Route::get('/character', [ArticleController::class, 'character'])->name('charact
 Route::get('/items', [ItemController::class, 'item'])->name('items');
 Route::get('/bugs', [BugsController::class, 'bugs'])->name('bugs_list');
 Route::get('/bugs_detail', [BugsController::class, 'bugs_detail'])->name('bugs_detail'); // потом поменять этот маршрут, чтобы он шёл от bugs
+Route::get('/modes', [ModesController::class, 'modes'])->name('modes');
+Route::post('/mistakes', [MistakeController::class, 'store'])->name('mistakes.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

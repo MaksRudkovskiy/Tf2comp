@@ -9,7 +9,15 @@
                 <div class="flex justify-between items-center gap-x-16 ml-20">
                     <a href="" class="hover:text-custom-text-hover">О сайте</a>
                     <a href="" class="hover:text-custom-text-hover">ЧАВО</a>
-                    <a href="" class="hover:text-custom-text-hover">Нашли ошибку?</a>
+                    <x-mistake-report-modal />
+                    @if(session('status') === 'error-reported')
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 3000)"
+                             class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded">
+                            Спасибо! Ваш отчет об ошибке отправлен.
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -48,12 +56,13 @@
                                 @if(Auth::user()->avatar && strlen(Auth::user()->avatar) > 0)
                                     <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->avatar) }}"
                                          alt="User Avatar"
-                                         class="rounded border-tf h-24 w-24 mx-auto my-6">
+                                         class="rounded border-tf h-24 w-24 mx-auto my-6"
+                                    >
                                 @else
-                                <div class="rounded border-tf h-24 w-24 mx-auto my-6 bg-custom-EBE3CB flex items-center justify-center">
-                                <span class="text-4xl font-bold text-gray-600">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </span>
+                                    <div class="rounded border-tf h-24 w-24 mx-auto my-6 bg-custom-EBE3CB flex items-center justify-center">
+                                        <span class="text-4xl font-bold text-gray-600">
+                                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                        </span>
                                     </div>
                                 @endif
 
