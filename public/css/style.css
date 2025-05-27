@@ -14,6 +14,11 @@ a
     font-size: 24px;
 }
 
+.transparency-90
+{
+    background-color:  rgba(14, 14, 14, 0.9);
+}
+
 .border-tf
 {
     border: 1px solid black;
@@ -26,7 +31,26 @@ a
     border-top: 1px solid black;
 }
 
+.w-84
+{
+    width: 21rem;
+}
+
 .w400
 {
     width: 400px;
+}
+
+.bg-dark-transparent {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.max-h-700
+{
+    max-height: 700px;
+}
+
+.border-bottom-EBE3CB
+{
+    border-bottom: 2px solid #EBE3CB;
 }

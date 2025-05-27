@@ -21,4 +21,22 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function getAvatarAttribute($value)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return $value;
+    }
+
+    public function setAvatarAttribute($value)
+    {
+        if ($value === null || is_string($value)) {
+            $this->attributes['avatar'] = $value;
+        } else {
+            $this->attributes['avatar'] = file_get_contents($value->getRealPath());
+        }
+    }
 }

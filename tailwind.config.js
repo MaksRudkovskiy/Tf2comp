@@ -22,6 +22,8 @@ export default {
                 'buttons': '#0A0A0A',
                 // Средние блоки
                 'block': '#131313',
+                // Каталоговые блоки
+                'catalog': '#262222',
             },
             colors: {
                 custom: {
@@ -33,6 +35,10 @@ export default {
                     '4D52BC': '#4D52BC',
                     '2d2f37': '#2d2f37',
                     'EBE3CB': '#EBE3CB',
+                    'danger': '#380303',
+                    'ret': '#9E2E2C',
+                    'blu': '#4D758E',
+
                 }
             },
             fontFamily: {
