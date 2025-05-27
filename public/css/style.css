@@ -59,3 +59,16 @@ a
 {
     max-width: 420px;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #EBE3CB !important;
+    opacity: 1 !important; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #EBE3CB !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #EBE3CB !important;
+}
