@@ -25,9 +25,12 @@
             <div>
 
                 <div class="navigation w-3/4 mx-auto flex gap-x-8">
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl bg-block px-8 py-3 rounded-t-md" href="/">Справочник</a>
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl bg-block px-8 py-3 rounded-t-md" href="{{route('changes')}}">Изменения</a>
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl bg-block px-8 py-3 rounded-t-md" href="{{route('blog')}}">Блог</a>
+                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="/">Справочник</a>
+                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('changes')}}">Изменения</a>
+                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('blog')}}">Блог</a>
+                    @auth
+                        <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('admin')}}">Админ</a>
+                    @endauth
                 </div>
 
                 <div class="content min-h-96 bg-main border-tf">
