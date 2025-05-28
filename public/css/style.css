@@ -82,3 +82,26 @@ a
 {
     font-size: 10px;
 }
+
+/* Стили для превью при перетаскивании */
+.file-upload-preview {
+    transition: all 0.3s ease;
+}
+
+.file-upload-preview.dragover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Скрытие стандартного инпута */
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

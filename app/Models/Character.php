@@ -3,14 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Character extends Model
 {
     protected $fillable = ['name', 'description', 'red_picture', 'blu_picture'];
 
-    public function items()
+    // Геттер для получения полного URL изображения
+    public function getRedPictureUrlAttribute()
     {
-        return $this->belongsToMany(Item::class, 'class_items', 'class_id', 'items_id');
+        return $this->getImageUrl($this->red_picture);
+    }
+
+    public function getBluPictureUrlAttribute()
+    {
+        return $this->getImageUrl($this->blu_picture);
+    }
+
+    private function getImageUrl(?string $path): ?string
+    {
+        if (!$path) return null;
+
+        return Storage::url($path);
+
     }
 
     public function getIconLetter()

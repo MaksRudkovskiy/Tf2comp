@@ -14,30 +14,53 @@
 
     <div class="w-3/4 mx-auto my-16">
         <div class="bg-front border-tf rounded-lg p-8">
-            <form method="POST" action="{{ route('admin.characters.update', $character) }}" enctype="multipart/form-data">
+
+            <h1 class="border-bottom-EBE3CB text-2xl">
+                {{$character->name}} - Редактирование
+            </h1>
+
+            <form method="POST" class="mt-5" action="{{ route('admin.characters.update', $character) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="flex">
 
-                    <div class="mb-6">
-                        <x-input-label value="Изображение RED" />
-                        @if($character->red_picture)
-                            <img src="{{ asset('storage/' . $character->red_picture) }}"
-                                 alt="{{ $character->name }} (RED)"
-                                 class="w-64 h-64 object-contain mb-4">
-                        @endif
-                        <x-file-input name="red_picture" class="mt-1 block w-full" value="" accept="image/jpeg,image/png" />
+                    <!-- RED Image Upload -->
+                    <div class="relative group">
+                        <x-input-label value="RED Team" class="mb-2 text-center"/>
+                        <label for="red_picture" class="cursor-pointer">
+                            <div class="w-32 h-32 border-2 border-red-600 rounded-lg flex items-center justify-center overflow-hidden bg-custom-ret hover:bg-gray-200 transition">
+                                @if($character->red_picture)
+                                    <img src="{{ asset('storage/' . $character->red_picture) }}"
+                                         alt="{{ $character->name }} (RED)"
+                                         class="object-contain w-full h-full">
+                                @else
+                                    <div class="text-red-600 text-4xl">+</div>
+                                @endif
+                            </div>
+                            <div class="absolute inset-0 opacity-0">
+                                <x-file-input id="red_picture" name="red_picture" class="w-full h-full" accept="image/jpeg,image/png" />
+                            </div>
+                        </label>
                     </div>
 
-                    <div class="mb-6">
-                        <x-input-label value="Изображение BLU" />
-                        @if($character->blu_picture)
-                            <img src="{{ asset('storage/' . $character->blu_picture) }}"
-                                 alt="{{ $character->name }} (BLU)"
-                                 class="w-64 h-64 object-contain mb-4">
-                        @endif
-                        <x-file-input name="blu_picture" class="mt-1 block w-full" value="{{$character->blue_picture}}" accept="image/jpeg,image/png" />
+                    <!-- BLU Image Upload -->
+                    <div class="relative group">
+                        <x-input-label value="BLU Team" class="mb-2 text-center"/>
+                        <label for="blu_picture" class="cursor-pointer">
+                            <div class="w-32 h-32 border-2 border-blue-600 rounded-lg flex items-center justify-center overflow-hidden bg-custom-blu hover:bg-gray-200 transition">
+                                @if($character->blu_picture)
+                                    <img src="{{ asset('storage/' . $character->blu_picture) }}"
+                                         alt="{{ $character->name }} (BLU)"
+                                         class="object-cover w-full h-full">
+                                @else
+                                    <div class="text-blue-600 text-4xl">+</div>
+                                @endif
+                            </div>
+                            <div class="absolute inset-0 opacity-0">
+                                <x-file-input id="blu_picture" name="blu_picture" class="w-full h-full" accept="image/jpeg,image/png" />
+                            </div>
+                        </label>
                     </div>
 
                 </div>

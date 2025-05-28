@@ -12,8 +12,8 @@ class CreateCharactersTable extends Migration
             $table->id();
             $table->string('name', 20);
             $table->text('description');
-            $table->string('red_picture')->nullable();
-            $table->binary('blu_picture')->nullable();
+            $table->string('red_picture');
+            $table->string('blu_picture')->nullable();
             $table->timestamps();
         });
     }

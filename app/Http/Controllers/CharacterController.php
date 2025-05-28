@@ -27,31 +27,24 @@ class CharacterController extends Controller
             'blu_picture' => 'nullable|image|mimes:jpeg,png|max:2048'
         ]);
 
-        $updateData = [
-            'description' => $validated['description']
-        ];
+        $updateData = ['description' => $validated['description']];
 
-        try {
-            foreach (['red_picture', 'blu_picture'] as $field) {
-                if ($request->hasFile($field)) {
-                    // Удаляем старое изображение
-                    if ($character->$field && Storage::exists('public/' . $character->$field)) {
-                        Storage::delete('public/' . $character->$field);
-                    }
-
-                    // Сохраняем новое изображение
-                    $path = $request->file($field)->store('public/characters');
-                    $updateData[$field] = str_replace('public/', '', $path);
+        foreach (['red_picture', 'blu_picture'] as $field) {
+            if ($request->hasFile($field)) {
+                // Удаляем старое, если оно не дефолтное
+                if ($character->$field && !str_contains($character->$field, 'default/')) {
+                    Storage::delete("public/{$character->$field}");
                 }
+
+                // Сохраняем новое в подпапку uploaded
+                $path = $request->file($field)->store(
+                    "public/characters/uploaded"
+                );
+                $updateData[$field] = str_replace('public/', '', $path);
             }
-
-            $character->update($updateData);
-
-            return redirect()->route('admin')
-                ->with('success', 'Изменения сохранены!');
-
-        } catch (\Exception $e) {
-            return back()->with('error', 'Ошибка при сохранении: ' . $e->getMessage());
         }
+
+        $character->update($updateData);
+        return redirect()->back();
     }
 }
