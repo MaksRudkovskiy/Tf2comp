@@ -72,3 +72,13 @@ a
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: #EBE3CB !important;
 }
+
+.min-h-2xl
+{
+    min-height: 700px;
+}
+
+.text-2xs
+{
+    font-size: 10px;
+}

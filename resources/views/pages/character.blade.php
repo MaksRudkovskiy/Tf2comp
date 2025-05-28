@@ -1,17 +1,21 @@
 <x-app-layout>
-
-    <x-slot name="pageTitle">Персонаж</x-slot>
+    <x-slot name="pageTitle">{{ $character->name }}</x-slot>
 
     <div class="w-3/4 mx-auto flex justify-between my-10">
-
-        <img src="" alt="">
-
         <div class="flex">
-
-            <img src="{{asset('content/img/pictures/pyro-red.png')}}" alt="">
+            @if($character->red_picture)
+                <div class="relative w-[600px] h-[750px] flex items-center justify-center overflow-hidden">
+                    <img src="{{ asset($character->red_picture) }}"
+                         alt="{{ $character->name }}"
+                         class="object-contain max-w-full max-h-full">
+                </div>
+            @else
+                <div class="w-[600px] h-[750px] bg-gray-200 flex items-center justify-center">
+                    <span>Изображение отсутствует</span>
+                </div>
+            @endif
 
             <div class="flex ml-4">
-
                 <div class="flex flex-col gap-4 mr-9">
                     <x-primary-button class="text-custom-ret hover:text-custom-EBE3CB w-32 text-4xl">Крс</x-primary-button>
                     <x-primary-button class="text-custom-blu hover:text-custom-EBE3CB w-32 text-4xl">Син</x-primary-button>
@@ -19,19 +23,11 @@
 
                 <div class="bg-front border-tf rounded-lg p-7 mb-8">
                     <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">ОПИСАНИЕ</h3>
-                    <div class="space-y-4 text-gray-800 dark:text-gray-200">
-                        <p class="font-tf2 ">Поджигатель - верильщица пирожки неизвестного происхождения, питает жручую любовь к огню и всему, что с ним связано. Как показано в романе «Знакомство». Поджигателем он думает, что живёт в угальнном мире ароматная, известная, как Пирожкурия.</p>
-
-                        <p class="font-tf2 ">Используя самодовольный оттенок, поджигатель может поджигать противников на видимой дистанции, сводя на нет их здоровье с помощью последующего уровня от фатализации. Идти необходимое функционирование оттенков поджигателя можно сделать для опасных достояниях и больше помогается на засаде и вместимость, стараясь застать врагов врасплох.</p>
-
-                        <p class="font-tf2 ">Хотя поджигатель и считается атакующим классом, он достаточно универсален и осмотрел рядом уникальных возможностей. Используя сжатый воздух, поджигатель может отражать снаряды, тушить горящих скользков, отбрасывать медалью от его пациента (это действует даже на утверждённые претензии). За исключением убега травой выстроительной фермериальности врагов, потребовался их в воздух и даже делать прямой на отражённой ракете.</p>
+                    <div class="space-y-4">
+                        <p class="font-tf2">{{ $character->description }}</p>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </x-app-layout>

@@ -9,14 +9,16 @@ class MistakeController extends Controller
 {
     public function store(Request $request)
     {
-        if (auth()->check()) {
-            $alreadySubmitted = Mistake::where('user_id', auth()->id())
-                ->whereDate('created_at', today())
-                ->exists();
+        if (!auth()->check()) {
+            return back()->with('error', 'Пожалуйста, авторизуйтесь, чтобы отправить сообщение об ошибке.');
+        }
 
-            if ($alreadySubmitted) {
-                return back()->with('error', 'Вы уже отправляли сообщение об ошибке сегодня');
-            }
+        $alreadySubmitted = Mistake::where('user_id', auth()->id())
+            ->whereDate('created_at', today())
+            ->exists();
+
+        if ($alreadySubmitted) {
+            return back()->with('error', 'Вы уже отправляли сообщение об ошибке сегодня');
         }
 
         $validated = $request->validate([

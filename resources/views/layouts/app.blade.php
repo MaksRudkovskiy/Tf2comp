@@ -24,16 +24,10 @@
         <main class="flex-grow mt-12 max-h-min max-h-700">
             <div>
 
-                <div class="navigation w-3/4 mx-auto flex gap-x-8">
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="/">Справочник</a>
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('changes')}}">Изменения</a>
-                    <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('blog')}}">Блог</a>
-                    @auth
-                        <a class="hover:text-custom-text-hover border-tf-nav text-4xl min-w-72 text-center bg-block px-8 py-3 rounded-t-md" href="{{route('admin')}}">Админ</a>
-                    @endauth
-                </div>
+                <x-nav-tf>
+                </x-nav-tf>
 
-                <div class="content min-h-96 bg-main border-tf">
+                <div class="content min-h-2xl bg-main border-tf">
                      {{$slot}}
                 </div>
 
