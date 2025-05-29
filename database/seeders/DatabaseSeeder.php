@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             CharacterSeeder::class,
             HistorySeeder::class,
             BugsSeeder::class,
+            ChangesSeeder::class,
+            BlogSeeder::class,
             ModeratorSeeder::class,
         ]);
 

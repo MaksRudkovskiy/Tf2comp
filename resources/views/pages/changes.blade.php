@@ -8,7 +8,7 @@
                     {{ $change->title }}
                 </h1>
 
-                <p class="font-tf2 mt-5 whitespace-pre-line">
+                <p class="font-tf2 mt-5">
                     {{ $change->text }}
                 </p>
             </div>
