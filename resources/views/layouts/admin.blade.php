@@ -58,7 +58,7 @@
                     <p class="text-center font-tf2 text-sm mt-1">Режимы</p>
                 </a>
 
-                <a href="{{ route('admin.history') }}" class="group @if($isActive('admin.history')) opacity-100 @else opacity-50 @endif">
+                <a href="{{ route('admin.histories') }}" class="group @if($isActive('admin.history')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/history.svg')}}" alt="История">
                     <p class="text-center font-tf2 text-sm mt-1">История</p>
                 </a>

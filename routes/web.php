@@ -36,11 +36,28 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
-    // Разделы админки
+
     Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
-    Route::get('/bugs', [AdminController::class, 'bugs'])->name('admin.bugs');
+
+    Route::prefix('bugs')->group(function () {
+        Route::get('/', [BugsController::class, 'index'])->name('admin.bugs');
+        Route::get('/create', [BugsController::class, 'create'])->name('admin.bugs.create');
+        Route::post('/', [BugsController::class, 'store'])->name('admin.bugs.store');
+        Route::get('/{id}/edit', [BugsController::class, 'edit'])->name('admin.bugs.edit');
+        Route::put('/{id}', [BugsController::class, 'update'])->name('admin.bugs.update');
+        Route::delete('/{id}', [BugsController::class, 'destroy'])->name('admin.bugs.destroy');
+    });
+
+    Route::prefix('histories')->group(function () {
+        Route::get('/', [HistoryController::class, 'index'])->name('admin.histories');
+        Route::get('/create', [HistoryController::class, 'create'])->name('admin.histories.create');
+        Route::post('/', [HistoryController::class, 'store'])->name('admin.histories.store');
+        Route::get('/{id}/edit', [HistoryController::class, 'edit'])->name('admin.histories.edit');
+        Route::put('/{id}', [HistoryController::class, 'update'])->name('admin.histories.update');
+        Route::delete('/{id}', [HistoryController::class, 'destroy'])->name('admin.histories.destroy');
+    });
+
     Route::get('/modes', [AdminController::class, 'modes'])->name('admin.modes');
-    Route::get('/history', [AdminController::class, 'history'])->name('admin.history');
     Route::get('/console', [AdminController::class, 'console'])->name('admin.console');
     Route::get('/changes', [AdminController::class, 'changes'])->name('admin.changes');
     Route::get('/blog', [AdminController::class, 'blog'])->name('admin.blog');

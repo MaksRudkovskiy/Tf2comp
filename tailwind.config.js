@@ -43,6 +43,18 @@ export default {
                     'blu': '#4D758E',
                     'uncommon': '#FFDC00',
 
+                    'back': '#1D1C1A',
+                    // Цвет основного заднего блока
+                    'main': '#141414',
+                    // Цвет переднего блока
+                    'front': '#0E0E0E',
+                    // Кнопки
+                    'buttons': '#0A0A0A',
+                    // Средние блоки
+                    'block': '#131313',
+                    // Каталоговые блоки
+                    'catalog': '#262222',
+                    'catalog_selected': '#B1A996',
                 }
             },
             fontFamily: {
