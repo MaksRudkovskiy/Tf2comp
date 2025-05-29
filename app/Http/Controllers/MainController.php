@@ -17,4 +17,14 @@ class MainController extends Controller
         $characters = Character::all();
         return view('welcome', compact('characters'));
     }
+
+    public function about()
+    {
+        return view('pages.about');
+    }
+
+    public function faq()
+    {
+        return view('pages.faq');
+    }
 }

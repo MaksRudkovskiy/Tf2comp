@@ -9,6 +9,8 @@ use App\Http\Middleware\EnsureModeratorAccess;
 
 // Публичные маршруты
 Route::get('/', [MainController::class, 'index'])->name('main_page');
+Route::get('/faq', [MainController::class, 'faq'])->name('faq');
+Route::get('/about', [MainController::class, 'about'])->name('about');
 Route::get('/character/{id}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/items', [ItemController::class, 'item'])->name('items');
 Route::get('/bugs', [BugsController::class, 'bugs'])->name('bugs_list');

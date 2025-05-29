@@ -7,8 +7,8 @@
                 </a>
 
                 <div class="flex justify-between items-center gap-x-16 ml-20">
-                    <a href="" class="hover:text-custom-text-hover">О сайте</a>
-                    <a href="" class="hover:text-custom-text-hover">ЧАВО</a>
+                    <a href="{{route('about')}}" class="hover:text-custom-text-hover">О сайте</a>
+                    <a href="{{route('faq')}}" class="hover:text-custom-text-hover">ЧАВО</a>
 
                     <!-- Кнопка для сообщения об ошибке -->
                     @auth
