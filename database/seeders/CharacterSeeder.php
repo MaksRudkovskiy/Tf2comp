@@ -69,11 +69,12 @@ class CharacterSeeder extends Seeder
 
     private function copyDefaultImage(string $filename): string
     {
-        $sourcePath = public_path("content/img/characters/{$filename}");
-        $destPath = "characters/default/{$filename}";
+        $source = public_path("content/img/characters/{$filename}");
+        $dest = "characters/default/{$filename}";
 
-        Storage::put("public/{$destPath}", file_get_contents($sourcePath));
+        File::copy($source, public_path("storage/{$dest}"));
 
-        return $destPath;
+        return $dest; // Возвращаем относительный путь
     }
+
 }

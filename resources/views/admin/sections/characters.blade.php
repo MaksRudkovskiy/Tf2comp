@@ -23,11 +23,9 @@
                 @csrf
                 @method('PUT')
 
-                <div class="flex">
+                <div class="flex my-4 gap-x-4">
 
-                    <!-- RED Image Upload -->
                     <div class="relative group">
-                        <x-input-label value="RED Team" class="mb-2 text-center"/>
                         <label for="red_picture" class="cursor-pointer">
                             <div class="w-32 h-32 border-2 border-red-600 rounded-lg flex items-center justify-center overflow-hidden bg-custom-ret hover:bg-gray-200 transition">
                                 @if($character->red_picture)
@@ -44,15 +42,13 @@
                         </label>
                     </div>
 
-                    <!-- BLU Image Upload -->
                     <div class="relative group">
-                        <x-input-label value="BLU Team" class="mb-2 text-center"/>
                         <label for="blu_picture" class="cursor-pointer">
                             <div class="w-32 h-32 border-2 border-blue-600 rounded-lg flex items-center justify-center overflow-hidden bg-custom-blu hover:bg-gray-200 transition">
                                 @if($character->blu_picture)
                                     <img src="{{ asset('storage/' . $character->blu_picture) }}"
                                          alt="{{ $character->name }} (BLU)"
-                                         class="object-cover w-full h-full">
+                                         class="object-contain w-full h-full">
                                 @else
                                     <div class="text-blue-600 text-4xl">+</div>
                                 @endif
@@ -68,7 +64,7 @@
                 <div>
                     <div>
                         <div class="mb-6">
-                            <x-input-label for="description" value="Описание" />
+                            <x-input-label for="description" class="text-xl" value="Описание" />
                             <x-text-area name="description"
                                          class="mt-1 block w-full h-64"
                                          required value="{{$character->description}}"

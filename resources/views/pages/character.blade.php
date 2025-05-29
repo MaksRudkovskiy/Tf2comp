@@ -5,9 +5,9 @@
         <div class="flex">
             @if($character->red_picture)
                 <div class="relative w-[600px] h-[750px] flex items-center justify-center overflow-hidden">
-                    <img src="{{ asset('storage/' . $character->red_picture) }}"
-                         alt="{{ $character->name }}"
-                         class="object-contain max-w-full max-h-full">
+                    <img src="{{ $character->getImageUrl('red_picture') }}"
+                         alt="{{ $character->name }} (RED)"
+                         class="object-contain w-full h-full">
                 </div>
             @else
                 <div class="w-[600px] h-[750px] bg-gray-200 flex items-center justify-center">

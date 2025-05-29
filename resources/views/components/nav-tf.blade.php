@@ -4,7 +4,7 @@
         $isCompendium = in_array($currentRoute, ['home', 'main_page', 'character', 'character.show', 'weapons', 'modes', 'items', 'histories', 'history_detail', 'console', 'bugs_list', 'bugs_detail']); // Добавьте все роуты справочника
         $isChanges = $currentRoute === 'changes';
         $isBlog = $currentRoute === 'blog';
-        $isAdmin = $currentRoute === 'admin';
+        $isAdmin = in_array($currentRoute, ['admin', 'admin.characters.edit']);
     @endphp
 
     <a class="text-4xl min-w-72 text-center px-8 py-3 rounded-t-md border-tf-nav bg-block @if($isCompendium)  @else text-custom-EBE3CB/50  @endif hover:text-custom-text-hover"

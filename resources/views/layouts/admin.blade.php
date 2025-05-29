@@ -31,68 +31,57 @@
 
             <!-- Боковое меню -->
             <div class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-front flex flex-col rounded-r-sm py-5 gap-y-2.5 z-10 border-tf md:w-20 w-16">
-                <button class="group">
+                @php
+                    $currentRoute = request()->route()->getName();
+                    $isActive = fn($route) => $currentRoute === $route ||
+                                             ($route === 'admin' && str_starts_with($currentRoute, 'admin.characters'));
+                @endphp
+
+                <a href="{{ route('admin') }}" class="group @if($isActive('admin')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/question_mark.svg')}}" alt="Классы">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Классы
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Классы</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.items') }}" class="group @if($isActive('admin.items')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/weapons.svg')}}" alt="Предметы">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Предметы
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Предметы</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.bugs') }}" class="group @if($isActive('admin.bugs')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/infinity.svg')}}" alt="Баги">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Баги
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Баги</p>
+                </a>
 
-                <button class="group">
+                <!-- Остальные пункты меню аналогично -->
+                <a href="{{ route('admin.modes') }}" class="group @if($isActive('admin.modes')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/modes.svg')}}" alt="Режимы">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Режимы
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Режимы</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.history') }}" class="group @if($isActive('admin.history')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/history.svg')}}" alt="История">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        История
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">История</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.console') }}" class="group @if($isActive('admin.console')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/console.svg')}}" alt="Консоль">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Консоль
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Консоль</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.changes') }}" class="group @if($isActive('admin.changes')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/changes.svg')}}" alt="Изменения">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Изменения
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Изменения</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.blog') }}" class="group @if($isActive('admin.blog')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/blog.svg')}}" alt="Блог">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Блог
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Блог</p>
+                </a>
 
-                <button class="group">
+                <a href="{{ route('admin.mistakes') }}" class="group @if($isActive('admin.mistakes')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/mistakes.svg')}}" alt="Ошибки">
-                    <p class="text-center font-tf2 text-sm mt-1">
-                        Ошибки
-                    </p>
-                </button>
+                    <p class="text-center font-tf2 text-sm mt-1">Ошибки</p>
+                </a>
             </div>
 
             {{$slot}}

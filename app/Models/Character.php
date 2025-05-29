@@ -20,12 +20,9 @@ class Character extends Model
         return $this->getImageUrl($this->blu_picture);
     }
 
-    private function getImageUrl(?string $path): ?string
+    public function getImageUrl($field)
     {
-        if (!$path) return null;
-
-        return Storage::url($path);
-
+        return $this->$field ? asset("storage/{$this->$field}") : null;
     }
 
     public function getIconLetter()
