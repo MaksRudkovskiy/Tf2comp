@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Mistake;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -16,8 +17,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $mistakes = $request->user()->mistakes()->latest()->paginate(10);
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'mistakes' => $mistakes // Передаем ошибки в представление
         ]);
     }
 

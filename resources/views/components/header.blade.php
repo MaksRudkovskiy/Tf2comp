@@ -61,7 +61,7 @@
                                 @endif
                                 <div class="px-4 text-lg mb-6 text-center">{{ Auth::user()->name }}</div>
                                 <a href="{{ route('profile.edit') }}">
-                                    <button class="px-4 py-1.5 text-lg text-md w-52 bg-main rounded border-tf hover:text-custom-text-hover">Редактировать</button>
+                                    <button class="px-4 py-1.5 text-lg text-md w-52 bg-main rounded border-tf hover:text-custom-text-hover">Профиль</button>
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

@@ -31,6 +31,11 @@ class User extends Authenticatable
         return $value;
     }
 
+    public function mistakes()
+    {
+        return $this->hasMany(Mistake::class);
+    }
+
     public function setAvatarAttribute($value)
     {
         if ($value === null || is_string($value)) {

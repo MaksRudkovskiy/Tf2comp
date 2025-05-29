@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Character;
+use App\Models\Mistake;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -55,6 +56,7 @@ class AdminController extends Controller
 
     public function mistakes()
     {
-        return view('admin.sections.mistakes');
+        $mistakes = Mistake::with('user')->latest()->get();
+        return view('admin.sections.mistakes', compact('mistakes'));
     }
 }

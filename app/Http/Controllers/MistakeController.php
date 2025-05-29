@@ -23,12 +23,32 @@ class MistakeController extends Controller
 
         $validated = $request->validate([
             'text' => 'required|string|max:2000',
-            'date' => 'required|date',
-            'user_id' => 'nullable|exists:users,id'
         ]);
 
-        Mistake::create($validated);
+        Mistake::create([
+            'text' => $validated['text'],
+            'date' => now(), // Используем now() вместо request->date
+            'user_id' => auth()->id(),
+            'status' => 'pending'
+        ]);
 
         return back()->with('status', 'error-reported');
+    }
+
+    public function update(Request $request, Mistake $mistake)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,rejected,acknowledged,fixed'
+        ]);
+
+        $mistake->update(['status' => $request->status]);
+
+        return back()->with('success', 'Статус обновлен');
+    }
+
+    public function destroy(Mistake $mistake)
+    {
+        $mistake->delete();
+        return back()->with('success', 'Сообщение удалено');
     }
 }

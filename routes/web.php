@@ -38,7 +38,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/console', [AdminController::class, 'console'])->name('admin.console');
         Route::get('/changes', [AdminController::class, 'changes'])->name('admin.changes');
         Route::get('/blog', [AdminController::class, 'blog'])->name('admin.blog');
+
         Route::get('/mistakes', [AdminController::class, 'mistakes'])->name('admin.mistakes');
+
+        // Добавьте эти маршруты для управления ошибками:
+        Route::prefix('mistakes')->group(function () {
+            Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
+            Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
+        });
 
         // Управление персонажами
         Route::get('/characters/{character}/edit', [AdminController::class, 'character'])
