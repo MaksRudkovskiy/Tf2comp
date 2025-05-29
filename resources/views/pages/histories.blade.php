@@ -1,27 +1,26 @@
 <x-app-layout>
-
     <x-slot name="pageTitle">История игры</x-slot>
 
     <div class="w-3/4 mx-auto py-12">
-
-        <div class="flex flex-wrap justify-between gap-20">
-
-            @for($i = 0; $i < 6; $i++ )
-                <div class="p-5 bg-front border-tf w-full mw420">
-                    <a href="{{route('history_detail')}}">
-                        <h2 class="text-xl text-center">
-                            Зарождение концептов TF2
+        <div class="flex flex-wrap justify-between gap-y-8">
+            @forelse($histories as $history)
+                <div class="p-5 bg-front border-tf w-full mw420 hover:bg-front/80 transition-colors">
+                    <a href="{{ route('history_detail', ['id' => $history->id]) }}" class="block">
+                        <h2 class="text-xl text-center font-tf2">
+                            {{ $history->title }}
                         </h2>
 
-                        <p class="font-tf2 text-lg">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi consequat augue vitae euismod facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam vel ligula et lorem ultricies pellentesque a ut elit. Vestibulum hendrerit odio sapien, eu tempus lectus semper id. Class... <span class="font-tf2build text-lg"> Узнать больше </span>
+                        <p class="font-tf2 text-lg mt-3">
+                            {{ Str::limit($history->text, 200) }}
+                            <span class="font-tf2build text-lg block mt-2">Узнать больше →</span>
                         </p>
                     </a>
                 </div>
-            @endfor
-
+            @empty
+                <div class="w-full text-center py-8">
+                    <p class="font-tf2 text-lg">Исторические материалы пока не добавлены</p>
+                </div>
+            @endforelse
         </div>
-
     </div>
-
 </x-app-layout>

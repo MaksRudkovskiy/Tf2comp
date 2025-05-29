@@ -12,6 +12,11 @@ class CharacterSeeder extends Seeder
 {
     public function run(): void
     {
+        if (Character::count() >= 9) {
+            $this->command->info('уже просидированыы!');
+            return;
+        }
+
         Storage::makeDirectory('public/characters/default');
 
         $classes = [

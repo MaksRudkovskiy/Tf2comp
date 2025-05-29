@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Article;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CharacterSeeder::class,
+            HistorySeeder::class,
+            BugsSeeder::class,
         ]);
 
 
