@@ -19,7 +19,7 @@
                     <div class="flex space-x-2">
                         <a href="{{ route('admin.bugs.edit', $bug->id) }}"
                            class=" rounded text-sm">
-                             <x-primary-button class="bg-main">
+                             <x-primary-button class="bg-custom-block">
                                  Редактировать
                              </x-primary-button>
                         </a>

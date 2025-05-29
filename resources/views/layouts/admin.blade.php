@@ -33,8 +33,21 @@
             <div class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-front flex flex-col rounded-r-sm py-5 gap-y-2.5 z-10 border-tf md:w-20 w-16">
                 @php
                     $currentRoute = request()->route()->getName();
-                    $isActive = fn($route) => $currentRoute === $route ||
-                                             ($route === 'admin' && str_starts_with($currentRoute, 'admin.characters'));
+                    $isActive = function($route) use ($currentRoute) {
+                        // Специальная проверка для админки
+                        if ($route === 'admin') {
+                            return $currentRoute === 'admin' ||
+                                   str_starts_with($currentRoute, 'admin.characters');
+                        }
+                        // Для histories учитываем возможные варианты
+                        if ($route === 'admin.histories') {
+                            return $currentRoute === 'admin.histories' ||
+                                   str_starts_with($currentRoute, 'admin.histories.');
+                        }
+                        // Общая проверка для остальных маршрутов
+                        return $currentRoute === $route ||
+                               str_starts_with($currentRoute, $route . '.');
+                    };
                 @endphp
 
                 <a href="{{ route('admin') }}" class="group @if($isActive('admin')) opacity-100 @else opacity-50 @endif">
@@ -58,7 +71,7 @@
                     <p class="text-center font-tf2 text-sm mt-1">Режимы</p>
                 </a>
 
-                <a href="{{ route('admin.histories') }}" class="group @if($isActive('admin.history')) opacity-100 @else opacity-50 @endif">
+                <a href="{{ route('admin.histories') }}" class="group @if($isActive('admin.histories')) opacity-100 @else opacity-50 @endif">
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/history.svg')}}" alt="История">
                     <p class="text-center font-tf2 text-sm mt-1">История</p>
                 </a>

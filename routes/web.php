@@ -12,7 +12,7 @@ Route::get('/character/{id}', [CharacterController::class, 'show'])->name('chara
 Route::get('/items', [ItemController::class, 'item'])->name('items');
 Route::get('/bugs', [BugsController::class, 'bugs'])->name('bugs_list');
 Route::get('/bugs/{id}', [BugsController::class, 'bugs_detail'])->name('bugs_detail');
-Route::get('/modes', [ModesController::class, 'modes'])->name('modes');
+Route::get('/modes', [ModesController::class, 'index'])->name('modes');
 Route::get('/changes', [ChangesController::class, 'changes'])->name('changes');
 Route::get('/blog', [BlogController::class, 'blog'])->name('blog');
 Route::get('/history', [HistoryController::class, 'histories'])->name('histories');
@@ -57,7 +57,15 @@ Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->group(functi
         Route::delete('/{id}', [HistoryController::class, 'destroy'])->name('admin.histories.destroy');
     });
 
-    Route::get('/modes', [AdminController::class, 'modes'])->name('admin.modes');
+    Route::prefix('modes')->group(function () {
+        Route::get('/', [ModesController::class, 'adminIndex'])->name('admin.modes');
+        Route::get('/create', [ModesController::class, 'create'])->name('admin.modes.create');
+        Route::post('/', [ModesController::class, 'store'])->name('admin.modes.store');
+        Route::get('/{id}/edit', [ModesController::class, 'edit'])->name('admin.modes.edit');
+        Route::put('/{id}', [ModesController::class, 'update'])->name('admin.modes.update');
+        Route::delete('/{id}', [ModesController::class, 'destroy'])->name('admin.modes.destroy');
+    });
+
     Route::get('/console', [AdminController::class, 'console'])->name('admin.console');
     Route::get('/changes', [AdminController::class, 'changes'])->name('admin.changes');
     Route::get('/blog', [AdminController::class, 'blog'])->name('admin.blog');

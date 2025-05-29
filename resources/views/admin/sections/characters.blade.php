@@ -74,11 +74,16 @@
 
                     </div>
                 </div>
+                <div class="flex text-center gap-x-2 items-center">
+                    <div class="flex gap-4">
+                        <x-primary-button class="bg-main" type="submit">
+                            Сохранить изменения
+                        </x-primary-button>
+                    </div>
 
-                <div class="flex gap-4 mt-8">
-                    <x-primary-button type="submit">
-                        Сохранить изменения
-                    </x-primary-button>
+                    <a href="{{ route('admin') }}" class="hover:text-custom-text-hover text-lg text-center px-2 py-2">
+                        Отмена
+                    </a>
                 </div>
             </form>
         </div>

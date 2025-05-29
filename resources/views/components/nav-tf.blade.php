@@ -1,10 +1,22 @@
 <div class="navigation w-3/4 mx-auto flex gap-x-8">
     @php
         $currentRoute = request()->route()->getName();
-        $isCompendium = in_array($currentRoute, ['home', 'main_page', 'character', 'character.show', 'weapons', 'modes', 'items', 'histories', 'history_detail', 'console', 'bugs_list', 'bugs_detail']);
-        $isChanges = $currentRoute === 'changes';
-        $isBlog = $currentRoute === 'blog';
-        $isAdmin = in_array($currentRoute, ['admin', 'admin.characters.edit']);
+
+        // Проверка для справочника (включая все дочерние маршруты)
+        $isCompendium = in_array($currentRoute, ['home', 'main_page']) ||
+                        str_starts_with($currentRoute, 'character') ||
+                        in_array($currentRoute, ['weapons', 'modes', 'items', 'histories', 'history']) ||
+                        str_starts_with($currentRoute, 'bugs_') ||
+                        $currentRoute === 'console';
+
+        // Проверка для изменений (включая все дочерние маршруты)
+        $isChanges = $currentRoute === 'changes' || str_starts_with($currentRoute, 'changes.');
+
+        // Проверка для блога (включая все дочерние маршруты)
+        $isBlog = $currentRoute === 'blog' || str_starts_with($currentRoute, 'blog.');
+
+        // Проверка для админки (включая все дочерние маршруты)
+        $isAdmin = str_starts_with($currentRoute, 'admin');
     @endphp
 
     <a class="text-4xl min-w-72 text-center px-8 py-3 rounded-t-md border-tf-nav bg-block @if($isCompendium)  @else text-custom-EBE3CB/50  @endif hover:text-custom-text-hover"
