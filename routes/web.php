@@ -4,6 +4,7 @@ use App\Http\Controllers\{ItemController, BugsController, CharacterController, M
     ProfileController, ModesController, MistakeController, ChangesController,
     BlogController, HistoryController, ConsoleController, AdminController};
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\EnsureIsAdmin;
 
 // Публичные маршруты
 Route::get('/', [MainController::class, 'index'])->name('main_page');
@@ -25,39 +26,40 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Админ-маршруты
-    Route::prefix('admin')->group(function () {
-        Route::get('/', [AdminController::class, 'admin'])->name('admin');
-
-        // Разделы админки
-        Route::get('/characters', [AdminController::class, 'admin'])->name('admin');
-        Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
-        Route::get('/bugs', [AdminController::class, 'bugs'])->name('admin.bugs');
-        Route::get('/modes', [AdminController::class, 'modes'])->name('admin.modes');
-        Route::get('/history', [AdminController::class, 'history'])->name('admin.history');
-        Route::get('/console', [AdminController::class, 'console'])->name('admin.console');
-        Route::get('/changes', [AdminController::class, 'changes'])->name('admin.changes');
-        Route::get('/blog', [AdminController::class, 'blog'])->name('admin.blog');
-
-        Route::get('/mistakes', [AdminController::class, 'mistakes'])->name('admin.mistakes');
-
-        // Добавьте эти маршруты для управления ошибками:
-        Route::prefix('mistakes')->group(function () {
-            Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
-            Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
-        });
-
-        // Управление персонажами
-        Route::get('/characters/{character}/edit', [AdminController::class, 'character'])
-            ->name('admin.characters.edit');
-        Route::put('/characters/{character}', [CharacterController::class, 'update'])
-            ->name('admin.characters.update');
-    });
-
     // Профиль пользователя
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Админ-маршруты
+Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'admin'])->name('admin');
+
+    // Разделы админки
+    Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
+    Route::get('/bugs', [AdminController::class, 'bugs'])->name('admin.bugs');
+    Route::get('/modes', [AdminController::class, 'modes'])->name('admin.modes');
+    Route::get('/history', [AdminController::class, 'history'])->name('admin.history');
+    Route::get('/console', [AdminController::class, 'console'])->name('admin.console');
+    Route::get('/changes', [AdminController::class, 'changes'])->name('admin.changes');
+    Route::get('/blog', [AdminController::class, 'blog'])->name('admin.blog');
+    Route::get('/mistakes', [AdminController::class, 'mistakes'])->name('admin.mistakes');
+
+    // Управление ошибками
+    Route::prefix('mistakes')->group(function () {
+        Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
+        Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
+    });
+
+    // Управление персонажами
+    Route::prefix('characters')->group(function () {
+        Route::get('/', [AdminController::class, 'admin'])->name('admin.characters.index');
+        Route::get('/{character}/edit', [AdminController::class, 'character'])
+            ->name('admin.characters.edit');
+        Route::put('/{character}', [CharacterController::class, 'update'])
+            ->name('admin.characters.update');
+    });
 });
 
 require __DIR__.'/auth.php';

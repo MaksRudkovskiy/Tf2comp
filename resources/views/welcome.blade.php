@@ -18,7 +18,7 @@
                 @endforeach
             </div>
 
-            <div class="flex justify-between px-32 mb-12 py-6">
+            <div class="flex justify-between px-32 my-12 py-6">
                 <a href="{{route('items')}}" class="group flex flex-col items-center">
                     <span class="text-8xl group-hover:text-custom-text-hover font-tf2icons2">P</span>
                     <span class="text-2xl mt-5 group-hover:text-custom-text-hover">Предметы</span>

@@ -44,4 +44,10 @@ class User extends Authenticatable
             $this->attributes['avatar'] = file_get_contents($value->getRealPath());
         }
     }
+
+    // app/Models/User.php
+    public function isAdmin(): bool
+    {
+        return $this->role === 1;
+    }
 }
