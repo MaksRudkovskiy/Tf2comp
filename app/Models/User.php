@@ -9,6 +9,10 @@ class User extends Authenticatable
 {
     use HasFactory;
 
+    const ROLE_USER = 0;
+    const ROLE_ADMIN = 1;
+    const ROLE_MODERATOR = 2;
+
     protected $fillable = [
         'name',
         'email',
@@ -27,7 +31,6 @@ class User extends Authenticatable
         if ($value === null) {
             return null;
         }
-
         return $value;
     }
 
@@ -45,9 +48,18 @@ class User extends Authenticatable
         }
     }
 
-    // app/Models/User.php
     public function isAdmin(): bool
     {
-        return $this->role === 1;
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isModerator(): bool
+    {
+        return $this->role === self::ROLE_MODERATOR;
+    }
+
+    public function hasAccessToAdminPanel(): bool
+    {
+        return $this->isAdmin() || $this->isModerator();
     }
 }

@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class EnsureAdminAccess
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 1) {
-            return $next($request);
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            abort(403, 'Доступ разрешен только администраторам');
         }
 
-        return redirect('/')->with('error', 'Доступ запрещен');
+        return $next($request);
     }
 }

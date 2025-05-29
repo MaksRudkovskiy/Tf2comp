@@ -6,11 +6,11 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureIsAdmin
+class EnsureModeratorAccess
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 1) {
+        if (!auth()->check() || !auth()->user()->hasAccessToAdminPanel()) {
             abort(403, 'Доступ запрещен');
         }
 

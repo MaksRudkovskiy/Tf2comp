@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 50)->unique();
             $table->string('password', 255);
             $table->binary('avatar')->nullable();
-            $table->tinyInteger('role')->default(0);
+            $table->tinyInteger('role')->default(0)->comment('0 - user, 1 - admin, 2 - moderator');
             $table->timestamps();
         });
     }
@@ -24,3 +24,4 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+

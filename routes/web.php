@@ -4,8 +4,10 @@ use App\Http\Controllers\{ItemController, BugsController, CharacterController, M
     ProfileController, ModesController, MistakeController, ChangesController,
     BlogController, HistoryController, ConsoleController, AdminController};
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\EnsureIsAdmin;
+use App\Http\Middleware\EnsureAdminAccess;
+use App\Http\Middleware\EnsureModeratorAccess;
 
+// Публичные маршруты
 Route::get('/', [MainController::class, 'index'])->name('main_page');
 Route::get('/character/{id}', [CharacterController::class, 'show'])->name('character.show');
 Route::get('/items', [ItemController::class, 'item'])->name('items');
@@ -19,6 +21,7 @@ Route::get('/history/{id}', [HistoryController::class, 'history'])->name('histor
 Route::get('/console', [ConsoleController::class, 'console'])->name('console');
 Route::post('/mistakes', [MistakeController::class, 'store'])->name('mistakes.store');
 
+// Авторизованные маршруты
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -29,12 +32,40 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->group(function () {
+// Админ и модератор маршруты
+Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->group(function () {
+    // Общие маршруты для админов и модераторов
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
-
-
     Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
 
+    // Маршруты только для админов
+    Route::middleware(EnsureAdminAccess::class)->group(function () {
+        Route::prefix('changes')->group(function () {
+            Route::get('/', [ChangesController::class, 'index'])->name('admin.changes');
+            Route::get('/create', [ChangesController::class, 'create'])->name('admin.changes.create');
+            Route::post('/', [ChangesController::class, 'store'])->name('admin.changes.store');
+            Route::get('/{id}/edit', [ChangesController::class, 'edit'])->name('admin.changes.edit');
+            Route::put('/{id}', [ChangesController::class, 'update'])->name('admin.changes.update');
+            Route::delete('/{id}', [ChangesController::class, 'destroy'])->name('admin.changes.destroy');
+        });
+
+        Route::prefix('blog')->group(function () {
+            Route::get('/', [BlogController::class, 'index'])->name('admin.blog');
+            Route::get('/create', [BlogController::class, 'create'])->name('admin.blog.create');
+            Route::post('/', [BlogController::class, 'store'])->name('admin.blog.store');
+            Route::get('/{id}/edit', [BlogController::class, 'edit'])->name('admin.blog.edit');
+            Route::put('/{id}', [BlogController::class, 'update'])->name('admin.blog.update');
+            Route::delete('/{id}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
+        });
+
+        Route::get('/mistakes', [AdminController::class, 'mistakes'])->name('admin.mistakes');
+        Route::prefix('mistakes')->group(function () {
+            Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
+            Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
+        });
+    });
+
+    // Маршруты для админов и модераторов
     Route::prefix('bugs')->group(function () {
         Route::get('/', [BugsController::class, 'index'])->name('admin.bugs');
         Route::get('/create', [BugsController::class, 'create'])->name('admin.bugs.create');
@@ -69,31 +100,6 @@ Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->group(functi
         Route::get('/{id}/edit', [ConsoleController::class, 'edit'])->name('admin.console.edit');
         Route::put('/{id}', [ConsoleController::class, 'update'])->name('admin.console.update');
         Route::delete('/{id}', [ConsoleController::class, 'destroy'])->name('admin.console.destroy');
-    });
-
-    Route::prefix('changes')->group(function () {
-        Route::get('/', [ChangesController::class, 'index'])->name('admin.changes');
-        Route::get('/create', [ChangesController::class, 'create'])->name('admin.changes.create');
-        Route::post('/', [ChangesController::class, 'store'])->name('admin.changes.store');
-        Route::get('/{id}/edit', [ChangesController::class, 'edit'])->name('admin.changes.edit');
-        Route::put('/{id}', [ChangesController::class, 'update'])->name('admin.changes.update');
-        Route::delete('/{id}', [ChangesController::class, 'destroy'])->name('admin.changes.destroy');
-    });
-
-    Route::prefix('blog')->group(function () {
-        Route::get('/', [BlogController::class, 'index'])->name('admin.blog');
-        Route::get('/create', [BlogController::class, 'create'])->name('admin.blog.create');
-        Route::post('/', [BlogController::class, 'store'])->name('admin.blog.store');
-        Route::get('/{id}/edit', [BlogController::class, 'edit'])->name('admin.blog.edit');
-        Route::put('/{id}', [BlogController::class, 'update'])->name('admin.blog.update');
-        Route::delete('/{id}', [BlogController::class, 'destroy'])->name('admin.blog.destroy');
-    });
-
-    Route::get('/mistakes', [AdminController::class, 'mistakes'])->name('admin.mistakes');
-
-    Route::prefix('mistakes')->group(function () {
-        Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
-        Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
     });
 
     Route::prefix('characters')->group(function () {
