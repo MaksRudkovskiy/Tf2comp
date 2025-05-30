@@ -45,7 +45,8 @@ class HistoryController extends Controller
         Article::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'history'
+            'type' => 'history',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.histories')->with('success', 'История добавлена!');

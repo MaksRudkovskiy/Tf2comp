@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-    protected $fillable = ['title', 'text', 'type'];
+    protected $fillable = ['title', 'text', 'type', 'user_id'];
 
     public function comment()
     {

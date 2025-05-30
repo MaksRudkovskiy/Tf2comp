@@ -48,7 +48,8 @@ class ModesController extends Controller
         Article::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'mode'
+            'type' => 'mode',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.modes')->with('success', 'Режим добавлен!');

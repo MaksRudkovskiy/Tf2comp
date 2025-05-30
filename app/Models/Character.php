@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Character extends Model
 {
-    protected $fillable = ['name', 'description', 'red_picture', 'blu_picture'];
+    protected $fillable = ['name', 'description', 'red_picture', 'blu_picture', 'user_id'];
 
     // Геттер для получения полного URL изображения
     public function getRedPictureUrlAttribute()

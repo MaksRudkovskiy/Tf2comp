@@ -12,6 +12,7 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->string('title', 25);
             $table->text('text');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->default(1);
             $table->enum('type', ['bug', 'history', 'mode', 'console']);
             $table->timestamps();
         });

@@ -45,7 +45,8 @@ class BugsController extends Controller
         Article::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'bug'
+            'type' => 'bug',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.bugs')->with('success', 'Статья добавлена!');

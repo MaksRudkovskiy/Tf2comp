@@ -16,6 +16,7 @@ class ChangesSeeder extends Seeder
                 'title' => 'V1.0',
                 'text' => 'Справочник',
                 'type' => 'changelog',
+                'user_id' => 1,
             ]
         );
     }

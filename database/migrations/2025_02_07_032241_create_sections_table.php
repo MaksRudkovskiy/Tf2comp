@@ -12,6 +12,7 @@ class CreateSectionsTable extends Migration
             $table->id();
             $table->string('title', 25);
             $table->text('text');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->default(1);
             $table->enum('type', ['blog', 'changelog']);
             $table->timestamps();
         });

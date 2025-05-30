@@ -44,7 +44,8 @@ class ChangesController extends Controller
         Section::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'changelog'
+            'type' => 'changelog',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.changes')->with('success', 'Изменение добавлено!');

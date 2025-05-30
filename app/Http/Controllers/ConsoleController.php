@@ -44,7 +44,8 @@ class ConsoleController extends Controller
         Article::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'console'
+            'type' => 'console',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.console')->with('success', 'Команда добавлена!');

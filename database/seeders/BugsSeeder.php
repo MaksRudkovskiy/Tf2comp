@@ -15,7 +15,8 @@ class BugsSeeder extends Seeder
         Article::create([
             'title' => 'Секретные места на 2fort',
             'text' => 'Полный текст о секретных местах...',
-            'type' => 'bug'
+            'type' => 'bug',
+            'user_id' => 1,
         ]);
 
     }

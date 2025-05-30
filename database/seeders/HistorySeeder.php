@@ -15,7 +15,8 @@ class HistorySeeder extends Seeder
         Article::create([
             'title' => 'Зарождение концептов TF2',
             'text' => 'Полный текст истории о создании TF2...',
-            'type' => 'history'
+            'type' => 'history',
+            'user_id' => 1,
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -44,7 +45,8 @@ class BlogController extends Controller
         Section::create([
             'title' => $validated['title'],
             'text' => $validated['text'],
-            'type' => 'blog'
+            'type' => 'blog',
+            'user_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.blog')->with('success', 'Пост добавлен!');

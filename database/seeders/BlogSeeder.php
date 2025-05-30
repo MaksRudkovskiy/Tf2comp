@@ -16,6 +16,7 @@ class BlogSeeder extends Seeder
                 'title' => 'Всем привет!',
                 'text' => 'Это начало блога на сайте!',
                 'type' => 'blog',
+                'user_id' => 1,
             ]
         );
     }
