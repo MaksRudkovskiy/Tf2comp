@@ -2,7 +2,7 @@
     <x-slot name="pageTitle">Редактирование {{ $item->name }}</x-slot>
 
     @if($errors->any())
-        <div class="w-3/4 mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div class="w-3/4 mx-auto mb-4 p-4 text-black bg-front border-red-400 rounded">
             <ul>
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -56,7 +56,7 @@
                     <div>
                         <x-input-label for="description" value="Полное описание" />
                         <x-text-area id="description" name="description" class="mt-1 block w-full h-32"
-                                     required>{{ old('description', $item->description) }}</x-text-area>
+                                     required value="{{ old('description', $item->description) }}"></x-text-area>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                     <div x-show="showUpside" class="mt-2">
                         <x-input-label for="upside" value="Преимущества" />
                         <x-text-area id="upside" name="upside" class="mt-1 block w-full h-24"
-                                     x-bind:required="showUpside">{{ old('upside', $item->upside) }}</x-text-area>
+                                     x-bind:required="showUpside"></x-text-area>
                     </div>
                 </div>
 

@@ -11,17 +11,21 @@ class ItemController extends Controller
     public function item(Request $request)
     {
         $characterId = $request->input('character');
-        $selectedItemId = $request->input('selected_item');
+        $page = $request->input('page', 1);
 
         $items = Item::when($characterId, function($query) use ($characterId) {
             return $query->whereHas('characters', function($q) use ($characterId) {
                 $q->where('characters_id', $characterId);
             });
-        })->paginate(16);
+        })->paginate(16, ['*'], 'page', $page);
 
-        $selectedItem = $selectedItemId ? Item::find($selectedItemId) : $items->first();
+        $selectedItemId = $request->input('selected_item');
+        $selectedItem = $selectedItemId
+            ? Item::find($selectedItemId)
+            : $items->first();
+
         $characters = Character::all();
 
-        return view('pages.item', compact('items', 'characters', 'selectedItem'));
+        return view('pages.item', compact('items', 'characters', 'selectedItem', 'page'));
     }
 }

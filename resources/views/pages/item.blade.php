@@ -19,10 +19,16 @@
                 <!-- Сетка предметов слева -->
                 <div class="grid gap-4 grid-cols-4 max-w-fit">
                     @foreach($items as $item)
-                        <a href="{{ route('items', ['character' => request('character'), 'selected_item' => $item->id]) }}"
+                        <a href="{{ route('items', [
+                            'character' => request('character'),
+                            'selected_item' => $item->id,
+                            'page' => $items->currentPage()
+                        ]) }}"
                            class="w-40 h-28 {{ $selectedItem && $selectedItem->id == $item->id ? 'bg-catalog_selected' : 'bg-catalog' }} flex justify-center items-center">
                             @if($item->image_path)
-                                <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}" class="w-[100px] h-[100px] object-contain">
+                                <img src="{{ asset('storage/' . $item->image_path) }}"
+                                     alt="{{ $item->name }}"
+                                     class="max-h-full max-w-full">
                             @endif
                         </a>
                     @endforeach
@@ -65,9 +71,38 @@
             </div>
 
             <!-- Пагинация -->
-            <div class="mt-10 flex justify-center items-center">
-                {{ $items->appends(['character' => request('character'), 'selected_item' => request('selected_item')])->links() }}
-            </div>
+            @if($items->hasPages())
+                <div class="mt-10 flex  items-center space-x-4">
+                    {{-- Previous Page Link --}}
+                    @if($items->onFirstPage())
+                        <span class="px-4 py-2 bg-gray-200 rounded text-gray-500 cursor-not-allowed">
+                &laquo;
+            </span>
+                    @else
+                        <a href="{{ $items->previousPageUrl() }}&selected_item={{ $selectedItem->id ?? '' }}&character={{ request('character') }}"
+                           class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog_selected transition">
+                            &laquo;
+                        </a>
+                    @endif
+
+                    {{-- Current Page --}}
+                    <span class="px-4 py-2 bg-front border-tf rounded">
+            {{ $items->currentPage() }} / {{ $items->lastPage() }}
+        </span>
+
+                    {{-- Next Page Link --}}
+                    @if($items->hasMorePages())
+                        <a href="{{ $items->nextPageUrl() }}&selected_item={{ $selectedItem->id ?? '' }}&character={{ request('character') }}"
+                           class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog_selected transition">
+                            &raquo;
+                        </a>
+                    @else
+                        <span class="px-4 py-2 bg-gray-200 rounded text-gray-500 cursor-not-allowed">
+                &raquo;
+            </span>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
