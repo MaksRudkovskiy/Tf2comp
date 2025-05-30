@@ -22,13 +22,13 @@
                 @method('PUT')
 
                 <!-- Загрузка изображения -->
-                <div class="relative group my-4">
+                <div class="relative group my-4 w-32 h-32">
                     <label for="image" class="cursor-pointer">
-                        <div class="w-32 h-32 border-2 border-gray-400 rounded-lg flex items-center justify-center overflow-hidden bg-gray-100 hover:bg-gray-200 transition">
+                        <div class="w-32 h-32 border-2 border-tf rounded-lg flex items-center justify-center overflow-hidden bg-back transition">
                             @if($item->image_path)
                                 <img src="{{ asset('storage/' . $item->image_path) }}"
                                      alt="{{ $item->name }}"
-                                     class="object-contain w-full h-full">
+                                     class="object-contain h-full w-[100px] h-[100px]">
                             @else
                                 <div class="text-gray-600 text-4xl">+</div>
                             @endif
