@@ -13,8 +13,8 @@ class ModeratorSeeder extends Seeder
         $moderators = [
             [
                 'name' => 'Moderator1',
-                'email' => 'moderator1@example.com',
-                'password' => Hash::make('password123'),
+                'email' => 'moderator1@mail.ru',
+                'password' => Hash::make('123123123'),
                 'role' => User::ROLE_MODERATOR
             ],
             [

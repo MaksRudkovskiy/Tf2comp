@@ -4,7 +4,7 @@
             <form method="GET" action="{{ route('items') }}" class="mb-4">
                 <h1 class="text-2xl">
                     Показать:
-                    <select name="character" class="bg-back border-transparent text-2xl py-2" onchange="this.form.submit()">
+                    <select name="character" class="bg-back border-tf text-2xl py-2" onchange="this.form.submit()">
                         <option value="">Все предметы</option>
                         @foreach($characters as $character)
                             <option value="{{ $character->id }}" {{ request('character') == $character->id ? 'selected' : '' }}>
@@ -50,7 +50,7 @@
                             @endif
 
                             @if($selectedItem->downside)
-                                <h3 class="font-tf2 text-center text-custom-negative font-extralight">
+                                <h3 class="font-tf2 text-center text-custom-ret font-extralight">
                                     {{ $selectedItem->downside }}
                                 </h3>
                             @endif
@@ -80,20 +80,20 @@
             </span>
                     @else
                         <a href="{{ $items->previousPageUrl() }}&selected_item={{ $selectedItem->id ?? '' }}&character={{ request('character') }}"
-                           class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog_selected transition">
+                           class="px-4 py-2 bg-main border-tf rounded hover:bg-catalog_selected transition">
                             &laquo;
                         </a>
                     @endif
 
                     {{-- Current Page --}}
-                    <span class="px-4 py-2 bg-front border-tf rounded">
+                    <span class="px-4 py-2 bg-main border-tf rounded">
             {{ $items->currentPage() }} / {{ $items->lastPage() }}
         </span>
 
                     {{-- Next Page Link --}}
                     @if($items->hasMorePages())
                         <a href="{{ $items->nextPageUrl() }}&selected_item={{ $selectedItem->id ?? '' }}&character={{ request('character') }}"
-                           class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog_selected transition">
+                           class="px-4 py-2 bg-main border-tf rounded hover:bg-catalog_selected transition">
                             &raquo;
                         </a>
                     @else

@@ -64,14 +64,18 @@ class AdminItemController extends Controller
             'name' => 'required|string|max:30',
             'caption' => 'nullable|string|max:100',
             'description' => 'required|string',
-            'show_upside' => 'boolean',
+            'show_upside' => 'sometimes|boolean',
             'upside' => 'nullable|string|required_if:show_upside,true',
-            'show_downside' => 'boolean',
+            'show_downside' => 'sometimes|boolean',
             'downside' => 'nullable|string|required_if:show_downside,true',
             'image' => 'nullable|image|mimes:jpeg,png|max:2048',
             'characters' => 'required|array|min:1',
             'characters.*' => 'exists:characters,id',
         ]);
+
+        // Добавляем значения по умолчанию для чекбоксов
+        $validated['show_upside'] = $request->has('show_upside');
+        $validated['show_downside'] = $request->has('show_downside');
 
         if ($request->hasFile('image')) {
             if ($item->image_path) {

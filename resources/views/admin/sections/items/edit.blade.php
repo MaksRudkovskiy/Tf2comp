@@ -63,23 +63,27 @@
                 <!-- Преимущества с чекбоксом -->
                 <div class="mt-6 space-y-2" x-data="{ showUpside: {{ $item->show_upside ? 'true' : 'false' }} }">
                     <div class="flex items-center">
-                        <input type="checkbox" id="show_upside" name="show_upside"
-                               x-model="showUpside" class="rounded">
+                        <input type="hidden" name="show_upside" value="0">
+                        <input type="checkbox" id="show_upside" name="show_upside" value="1"
+                               x-model="showUpside" class="rounded"
+                            {{ $item->show_upside ? 'checked' : '' }}>
                         <x-input-label for="show_upside" value="Добавить преимущества" class="ml-2" />
                     </div>
 
                     <div x-show="showUpside" class="mt-2">
                         <x-input-label for="upside" value="Преимущества" />
                         <x-text-area id="upside" name="upside" class="mt-1 block w-full h-24"
-                                     x-bind:required="showUpside"></x-text-area>
+                                     x-bind:required="showUpside">{{ old('upside', $item->upside) }}</x-text-area>
                     </div>
                 </div>
 
                 <!-- Недостатки с чекбоксом -->
                 <div class="mt-6 space-y-2" x-data="{ showDownside: {{ $item->show_downside ? 'true' : 'false' }} }">
                     <div class="flex items-center">
-                        <input type="checkbox" id="show_downside" name="show_downside"
-                               x-model="showDownside" class="rounded">
+                        <input type="hidden" name="show_downside" value="0">
+                        <input type="checkbox" id="show_downside" name="show_downside" value="1"
+                               x-model="showDownside" class="rounded"
+                            {{ $item->show_downside ? 'checked' : '' }}>
                         <x-input-label for="show_downside" value="Добавить недостатки" class="ml-2" />
                     </div>
 
