@@ -29,7 +29,7 @@
        href="{{route('blog')}}">Блог</a>
 
     @auth
-        @if(auth()->user()->role === 1 || 2)
+        @if(auth()->user()->role === 1 or auth()->user()->role === 2)
             <a class="text-4xl min-w-72 text-center px-8 py-3 rounded-t-md border-tf-nav bg-block @if($isAdmin)  @else text-custom-EBE3CB/50  @endif hover:text-custom-text-hover"
                href="{{route('admin')}}">Админ</a>
         @endif

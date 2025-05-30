@@ -34,8 +34,8 @@
                     </x-primary-button>
                 </div>
 
-                <div class="bg-front border-tf rounded-lg p-7 mb-8">
-                    <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">ОПИСАНИЕ</h3>
+                <div class="bg-front border-tf rounded-lg p-7 mb-8 min-w-[calc(600px-2rem)]">
+                    <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">{{$character->name}}</h3>
                     <div class="space-y-4">
                         <p class="font-tf2">{{ $character->description }}</p>
                     </div>
