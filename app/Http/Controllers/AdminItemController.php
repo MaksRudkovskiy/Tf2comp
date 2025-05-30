@@ -12,8 +12,9 @@ class AdminItemController extends Controller
     // Список всех предметов
     public function index()
     {
+        $characters = Character::all();
         $items = Item::with('characters')->latest()->get();
-        return view('admin.sections.items.index', compact('items'));
+        return view('admin.sections.items.index', compact('items', 'characters'));
     }
 
     // Форма создания
@@ -28,29 +29,71 @@ class AdminItemController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:30',
+            'caption' => 'nullable|string|max:100',
             'description' => 'required|string',
-            'upside' => 'nullable|string',
-            'downside' => 'nullable|string',
+            'show_upside' => 'boolean',
+            'upside' => 'nullable|string|required_if:show_upside,true',
+            'show_downside' => 'boolean',
+            'downside' => 'nullable|string|required_if:show_downside,true',
             'image' => 'required|image|mimes:jpeg,png|max:2048',
-            'characters' => 'required|array',
+            'characters' => 'required|array|min:1',
             'characters.*' => 'exists:characters,id',
         ]);
 
-        // Сохраняем изображение
         $imagePath = $request->file('image')->store('items', 'public');
 
         $item = Item::create([
             'name' => $validated['name'],
+            'caption' => $validated['caption'],
             'description' => $validated['description'],
-            'upside' => $validated['upside'],
-            'downside' => $validated['downside'],
+            'show_upside' => $validated['show_upside'],
+            'upside' => $validated['show_upside'] ? $validated['upside'] : null,
+            'show_downside' => $validated['show_downside'],
+            'downside' => $validated['show_downside'] ? $validated['downside'] : null,
             'image_path' => $imagePath,
         ]);
 
-        // Привязываем персонажей
         $item->characters()->sync($validated['characters']);
 
         return redirect()->route('admin.items')->with('success', 'Предмет добавлен!');
+    }
+
+    public function update(Request $request, Item $item)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:30',
+            'caption' => 'nullable|string|max:100',
+            'description' => 'required|string',
+            'show_upside' => 'boolean',
+            'upside' => 'nullable|string|required_if:show_upside,true',
+            'show_downside' => 'boolean',
+            'downside' => 'nullable|string|required_if:show_downside,true',
+            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'characters' => 'required|array|min:1',
+            'characters.*' => 'exists:characters,id',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($item->image_path) {
+                Storage::disk('public')->delete($item->image_path);
+            }
+            $imagePath = $request->file('image')->store('items', 'public');
+            $validated['image_path'] = $imagePath;
+        }
+
+        $item->update([
+                'name' => $validated['name'],
+                'caption' => $validated['caption'],
+                'description' => $validated['description'],
+                'show_upside' => $validated['show_upside'],
+                'upside' => $validated['show_upside'] ? $validated['upside'] : null,
+                'show_downside' => $validated['show_downside'],
+                'downside' => $validated['show_downside'] ? $validated['downside'] : null,
+            ] + (isset($validated['image_path']) ? ['image_path' => $validated['image_path']] : []));
+
+        $item->characters()->sync($validated['characters']);
+
+        return redirect()->route('admin.items')->with('success', 'Предмет обновлен!');
     }
 
     // Форма редактирования
@@ -59,36 +102,6 @@ class AdminItemController extends Controller
         $characters = Character::all();
         $item->load('characters');
         return view('admin.sections.items.edit', compact('item', 'characters'));
-    }
-
-    // Обновление предмета
-    public function update(Request $request, Item $item)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:30',
-            'description' => 'required|string',
-            'upside' => 'nullable|string',
-            'downside' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
-            'characters' => 'required|array',
-            'characters.*' => 'exists:characters,id',
-        ]);
-
-        // Обновляем изображение, если загружено новое
-        if ($request->hasFile('image')) {
-            // Удаляем старое изображение
-            if ($item->image_path) {
-                Storage::disk('public')->delete($item->image_path);
-            }
-
-            $imagePath = $request->file('image')->store('items', 'public');
-            $validated['image_path'] = $imagePath;
-        }
-
-        $item->update($validated);
-        $item->characters()->sync($validated['characters']);
-
-        return redirect()->route('admin.items')->with('success', 'Предмет обновлен!');
     }
 
     // Удаление предмета

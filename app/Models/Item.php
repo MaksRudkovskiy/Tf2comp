@@ -9,10 +9,13 @@ class Item extends Model
 {
     protected $fillable = [
         'name',
+        'caption',
         'description',
         'upside',
         'downside',
         'image_path',
+        'has_upside',
+        'has_downside',
         'modes_id'
     ];
 

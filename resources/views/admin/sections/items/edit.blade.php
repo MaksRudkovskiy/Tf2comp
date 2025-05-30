@@ -1,66 +1,104 @@
 <x-admin-layout>
-    <x-slot name="pageTitle">Редактировать предмет</x-slot>
-    <div class="w-3/4 mx-auto mt-12 h-full block">
-        <form action="{{ route('admin.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="space-y-4">
-                <!-- Изображение предмета -->
-                <div>
-                    <label class="block">Изображение предмета</label>
-                    <label class="block mt-2">
-                        <div class="w-40 h-40 bg-back border-tf border-dashed flex items-center justify-center cursor-pointer">
+    <x-slot name="pageTitle">Редактирование {{ $item->name }}</x-slot>
+
+    @if($errors->any())
+        <div class="w-3/4 mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="w-3/4 mx-auto my-16">
+        <div class="bg-front border-tf rounded-lg p-8">
+            <h1 class="border-bottom-EBE3CB text-2xl">
+                {{ $item->name }} - Редактирование
+            </h1>
+
+            <form method="POST" class="mt-5" action="{{ route('admin.items.update', $item) }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <!-- Загрузка изображения -->
+                <div class="relative group my-4">
+                    <label for="image" class="cursor-pointer">
+                        <div class="w-32 h-32 border-2 border-gray-400 rounded-lg flex items-center justify-center overflow-hidden bg-gray-100 hover:bg-gray-200 transition">
                             @if($item->image_path)
-                                <img src="{{ asset('storage/'.$item->image_path) }}"
+                                <img src="{{ asset('storage/' . $item->image_path) }}"
                                      alt="{{ $item->name }}"
                                      class="object-contain w-full h-full">
                             @else
-                                <div class="text-center">
-                                    <span class="block">Перетащите или</span>
-                                    <span class="block">выберите файл</span>
-                                </div>
+                                <div class="text-gray-600 text-4xl">+</div>
                             @endif
                         </div>
-                        <input type="file" name="image" class="hidden">
+                        <div class="absolute inset-0 opacity-0">
+                            <x-file-input id="image" name="image" class="w-full h-full" accept="image/jpeg,image/png" />
+                        </div>
                     </label>
                 </div>
 
-                <!-- Название -->
-                <div>
-                    <label class="block">Название предмета</label>
-                    <input type="text" name="name" value="{{ old('name', $item->name) }}"
-                           required maxlength="30" class="w-full px-3 py-2 bg-back border-tf border-tf rounded">
+                <!-- Основные поля -->
+                <div class="space-y-4">
+                    <div>
+                        <x-input-label for="name" value="Название предмета" />
+                        <x-text-input id="name" name="name" class="mt-1 block w-full"
+                                      value="{{ old('name', $item->name) }}" required maxlength="30" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="caption" value="Подпись (краткое описание)" />
+                        <x-text-input id="caption" name="caption" class="mt-1 block w-full"
+                                      value="{{ old('caption', $item->caption) }}" maxlength="100" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="description" value="Полное описание" />
+                        <x-text-area id="description" name="description" class="mt-1 block w-full h-32"
+                                     required>{{ old('description', $item->description) }}</x-text-area>
+                    </div>
                 </div>
 
-                <!-- Описание -->
-                <div>
-                    <label class="block">Описание</label>
-                    <x-text-area name="description" rows="3" required
-                                 class="w-full px-3 py-2 rounded">{{ old('description', $item->description) }}</x-text-area>
+                <!-- Преимущества с чекбоксом -->
+                <div class="mt-6 space-y-2" x-data="{ showUpside: {{ $item->show_upside ? 'true' : 'false' }} }">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="show_upside" name="show_upside"
+                               x-model="showUpside" class="rounded">
+                        <x-input-label for="show_upside" value="Добавить преимущества" class="ml-2" />
+                    </div>
+
+                    <div x-show="showUpside" class="mt-2">
+                        <x-input-label for="upside" value="Преимущества" />
+                        <x-text-area id="upside" name="upside" class="mt-1 block w-full h-24"
+                                     x-bind:required="showUpside">{{ old('upside', $item->upside) }}</x-text-area>
+                    </div>
                 </div>
 
-                <!-- Плюсы -->
-                <div>
-                    <label class="block">Положительные стороны (Upside)</label>
-                    <x-text-area name="upside" rows="2"
-                                 class="w-full px-3 py-2 rounded">{{ old('upside', $item->upside) }}</x-text-area>
-                </div>
+                <!-- Недостатки с чекбоксом -->
+                <div class="mt-6 space-y-2" x-data="{ showDownside: {{ $item->show_downside ? 'true' : 'false' }} }">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="show_downside" name="show_downside"
+                               x-model="showDownside" class="rounded">
+                        <x-input-label for="show_downside" value="Добавить недостатки" class="ml-2" />
+                    </div>
 
-                <!-- Минусы -->
-                <div>
-                    <label class="block">Отрицательные стороны (Downside)</label>
-                    <x-text-area name="downside" rows="2"
-                                 class="w-full px-3 py-2 rounded">{{ old('downside', $item->downside) }}</x-text-area>
+                    <div x-show="showDownside" class="mt-2">
+                        <x-input-label for="downside" value="Недостатки" />
+                        <x-text-area id="downside" name="downside" class="mt-1 block w-full h-24"
+                                     x-bind:required="showDownside">{{ old('downside', $item->downside) }}</x-text-area>
+                    </div>
                 </div>
 
                 <!-- Персонажи -->
-                <div>
-                    <label class="block">Кто может использовать</label>
-                    <div class="grid grid-cols-3 gap-2 mt-2">
+                <div class="mt-6">
+                    <x-input-label value="Кто может использовать" />
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
                         @foreach($characters as $character)
                             <label class="flex items-center space-x-2">
                                 <input type="checkbox" name="characters[]" value="{{ $character->id }}"
-                                    {{ $item->characters->contains($character->id) ? 'checked' : '' }}>
+                                       {{ $item->characters->contains($character->id) ? 'checked' : '' }}
+                                       class="rounded">
                                 <span>{{ $character->name }}</span>
                             </label>
                         @endforeach
@@ -68,16 +106,18 @@
                 </div>
 
                 <!-- Кнопки -->
-                <div class="flex space-x-2">
-                    <x-primary-button type="submit">
-                        Обновить
-                    </x-primary-button>
-                    <a href="{{ route('admin.items') }}"
-                       class="hover:text-custom-text-hover text-lg text-center px-2 py-2">
+                <div class="flex text-center gap-x-2 items-center mt-8">
+                    <div class="flex gap-4">
+                        <x-primary-button class="bg-main" type="submit">
+                            Сохранить изменения
+                        </x-primary-button>
+                    </div>
+
+                    <a href="{{ route('admin.items') }}" class="hover:text-custom-text-hover text-lg text-center px-2 py-2">
                         Отмена
                     </a>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </x-admin-layout>
