@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\{ItemController, BugsController, CharacterController, MainController,
     ProfileController, ModesController, MistakeController, ChangesController,
-    BlogController, HistoryController, ConsoleController, AdminController};
+    BlogController, HistoryController, ConsoleController, AdminController, AdminItemController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureAdminAccess;
 use App\Http\Middleware\EnsureModeratorAccess;
@@ -38,8 +38,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->group(function () {
     // Общие маршруты для админов и модераторов
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
-    Route::get('/items', [AdminController::class, 'items'])->name('admin.items');
 
+    Route::prefix('items')->group(function () {
+        Route::get('/', [AdminItemController::class, 'index'])->name('admin.items');
+        Route::get('/create', [AdminItemController::class, 'create'])->name('admin.items.create');
+        Route::post('/', [AdminItemController::class, 'store'])->name('admin.items.store');
+        Route::get('/{item}/edit', [AdminItemController::class, 'edit'])->name('admin.items.edit');
+        Route::put('/{item}', [AdminItemController::class, 'update'])->name('admin.items.update');
+        Route::delete('/{item}', [AdminItemController::class, 'destroy'])->name('admin.items.destroy');
+    });
     // Маршруты только для админов
     Route::middleware(EnsureAdminAccess::class)->group(function () {
         Route::prefix('changes')->group(function () {

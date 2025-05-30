@@ -28,10 +28,14 @@
                             class="text-custom-ret hover:text-custom-EBE3CB w-32 text-4xl">
                         Крс
                     </x-primary-button>
+                    @if(!isset($character->blu_picture))
+
+                    @else
                     <x-primary-button id="blu-team-btn"
                             class="text-custom-blu hover:text-custom-EBE3CB w-32 text-4xl">
                         Син
                     </x-primary-button>
+                    @endif
                 </div>
 
                 <div class="bg-front border-tf rounded-lg p-7 mb-8 min-w-[calc(600px-2rem)]">

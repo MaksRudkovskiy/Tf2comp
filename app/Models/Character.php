@@ -25,6 +25,12 @@ class Character extends Model
         return $this->$field ? asset("storage/{$this->$field}") : null;
     }
 
+    // Добавить в класс Character
+    public function items()
+    {
+        return $this->belongsToMany(Item::class, 'character_items', 'characters_id', 'items_id');
+    }
+
     public function getIconLetter()
     {
         return match($this->name) {
