@@ -22,7 +22,7 @@
                         <a href="{{ route('items', ['character' => request('character'), 'selected_item' => $item->id]) }}"
                            class="w-40 h-28 {{ $selectedItem && $selectedItem->id == $item->id ? 'bg-catalog_selected' : 'bg-catalog' }} flex justify-center items-center">
                             @if($item->image_path)
-                                <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}" class="max-h-full max-w-full">
+                                <img src="{{ asset('storage/' . $item->image_path) }}" alt="{{ $item->name }}" class="w-[100px] h-[100px] object-contain">
                             @endif
                         </a>
                     @endforeach

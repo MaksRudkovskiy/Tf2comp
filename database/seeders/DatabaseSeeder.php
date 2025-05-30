@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ChangesSeeder::class,
             BlogSeeder::class,
             ModeratorSeeder::class,
+            ItemSeeder::class,
         ]);
 
 
