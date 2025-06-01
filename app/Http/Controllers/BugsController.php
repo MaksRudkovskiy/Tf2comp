@@ -22,9 +22,19 @@ class BugsController extends Controller
     }
 
     // Админка - список
-    public function index()
+    public function index(request $request)
     {
-        $bugs = Article::where('type', 'bug')->latest()->get();
+        $search = $request->input('search');
+
+        $bugs = Article::where('type', 'bug')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
         return view('admin.sections.bugs.index', compact('bugs'));
     }
 

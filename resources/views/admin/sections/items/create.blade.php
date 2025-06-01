@@ -18,10 +18,10 @@
             <form method="POST" class="mt-5" action="{{ route('admin.items.store') }}" enctype="multipart/form-data" x-data="{ showUpside: false, showDownside: false }">
                 @csrf
 
-                <!-- Загрузка изображения -->
+                <!-- Загрузка изображения-->
                 <div class="relative group my-4 w-32 h-32">
                     <label for="image" class="cursor-pointer">
-                        <div class="w-32 h-32 border-2 border-tf rounded-lg flex items-center justify-center overflow-hidden bg-back transition">
+                        <div class="w-32 h-32 border-2 border-tf rounded-lg flex items-center justify-center overflow-hidden bg-back transition" id="image-preview">
                             <div class="text-4xl">+</div>
                         </div>
                         <div class="absolute inset-0 opacity-0">
@@ -52,32 +52,34 @@
                 </div>
 
                 <!-- Преимущества с чекбоксом -->
-                <div class="mt-6 space-y-2">
+                <div class="mt-6 space-y-2" x-data="{ showUpside: false }">
                     <div class="flex items-center">
-                        <input type="checkbox" id="show_upside" name="show_upside"
-                               x-model="showUpside" class="rounded" value="1">
+                        <input type="hidden" name="show_upside" value="0">
+                        <input type="checkbox" id="show_upside" name="show_upside" value="1"
+                               x-model="showUpside" class="rounded">
                         <x-input-label for="show_upside" value="Добавить преимущества" class="ml-2" />
                     </div>
 
                     <div x-show="showUpside" class="mt-2">
                         <x-input-label for="upside" value="Преимущества" />
                         <x-text-area id="upside" name="upside" class="mt-1 block w-full h-24"
-                                     x-bind:required="showUpside">{{ old('upside') }}</x-text-area>
+                                     x-bind:required="showUpside"></x-text-area>
                     </div>
                 </div>
 
                 <!-- Недостатки с чекбоксом -->
-                <div class="mt-6 space-y-2">
+                <div class="mt-6 space-y-2" x-data="{ showDownside: false }">
                     <div class="flex items-center">
-                        <input type="checkbox" id="show_downside" name="show_downside"
-                               x-model="showDownside" class="rounded" value="1">
-                        <x-input-label for="show_downside" value="Добавить недостатки" class=" ml-2" />
+                        <input type="hidden" name="show_downside" value="0">
+                        <input type="checkbox" id="show_downside" name="show_downside" value="1"
+                               x-model="showDownside" class="rounded">
+                        <x-input-label for="show_downside" value="Добавить недостатки" class="ml-2" />
                     </div>
 
                     <div x-show="showDownside" class="mt-2">
                         <x-input-label for="downside" value="Недостатки" />
-                        <x-text-area id="downside" name="downside" class=" mt-1 block w-full h-24"
-                                     x-bind:required="showDownside">{{ old('downside') }}</x-text-area>
+                        <x-text-area id="downside" name="downside" class="mt-1 block w-full h-24"
+                                     x-bind:required="showDownside"></x-text-area>
                     </div>
                 </div>
 
@@ -111,4 +113,7 @@
             </form>
         </div>
     </div>
+
+    <script src="{{asset('js/ItemPreviewChange.js')}}"></script>
+
 </x-admin-layout>

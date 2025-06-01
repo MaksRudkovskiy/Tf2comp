@@ -9,6 +9,21 @@
             </a>
         </div>
 
+        <div class="bg-front border-tf rounded-lg px-6 py-8 mb-6">
+            <form method="GET" action="{{ route('admin.modes') }}" class="flex">
+                <x-text-input
+                    name="search"
+                    placeholder="Поиск по названию или содержанию"
+                    value="{{ request('search') }}"
+                    class="w-full"
+                />
+                <x-primary-button type="submit" class="ml-2">Найти</x-primary-button>
+                <a href="{{ route('admin.modes') }}" class="ml-2 text-center px-4 border-tf rounded hover:bg-catalog">
+                    Сбросить
+                </a>
+            </form>
+        </div>
+
         <div class="space-y-4">
             @forelse($modes as $mode)
                 <div class="bg-front border-tf p-4 rounded-lg shadow flex justify-between items-center">
@@ -37,8 +52,13 @@
                 </div>
             @empty
                 <div class="text-center py-8 text-gray-500">
-                    Нет добавленных игровых режимов
+                    @if(request()->has('search'))
+                        Ничего не найдено
+                    @else
+                        Нет добавленных постов
+                    @endif
                 </div>
+
             @endforelse
         </div>
     </div>

@@ -18,11 +18,18 @@ class ConsoleController extends Controller
     }
 
     // Админка - список команд
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $commands = Article::where('type', 'console')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.sections.console.index', compact('commands'));
     }

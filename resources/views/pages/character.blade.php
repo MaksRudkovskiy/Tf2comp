@@ -4,7 +4,7 @@
     <div class="w-3/4 mx-auto flex justify-between my-10">
         <div class="flex">
             <!-- Контейнер для изображения -->
-            <div class="relative w-[600px] h-[750px] flex items-center justify-center overflow-hidden">
+            <div class="relative w-1/3 h-[750px] flex items-center justify-center overflow-hidden">
                 @if($character->red_picture)
                     <img id="character-image"
                          src="{{ $character->getImageUrl('red_picture') }}"
@@ -21,7 +21,7 @@
                 @endif
             </div>
 
-            <div class="flex ml-4">
+            <div class="flex ml-4 w-2/3">
                 <div class="flex flex-col gap-4 mr-9">
                     <!-- Кнопки переключения -->
                     <x-primary-button id="red-team-btn"

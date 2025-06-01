@@ -1,12 +1,28 @@
 <x-admin-layout>
     <x-slot name="pageTitle">Управление консольными командами</x-slot>
     <div class="w-3/4 mx-auto mt-12 h-full block">
+
         <div class="mb-6 flex">
             <a href="{{ route('admin.console.create') }}">
                 <x-primary-button>
                     + Добавить новую команду
                 </x-primary-button>
             </a>
+        </div>
+
+        <div class="bg-front border-tf rounded-lg px-6 py-8 mb-6">
+            <form method="GET" action="{{ route('admin.console') }}" class="flex">
+                <x-text-input
+                    name="search"
+                    placeholder="Поиск по названию или содержанию"
+                    value="{{ request('search') }}"
+                    class="w-full"
+                />
+                <x-primary-button type="submit" class="ml-2">Найти</x-primary-button>
+                <a href="{{ route('admin.console') }}" class="ml-2 text-center px-4 border-tf rounded hover:bg-catalog">
+                    Сбросить
+                </a>
+            </form>
         </div>
 
         <div class="space-y-4">
@@ -41,5 +57,35 @@
                 </div>
             @endforelse
         </div>
+
+        @if($commands->hasPages())
+            <div class="mt-6 flex justify-center items-center gap-4">
+                @if($commands->onFirstPage())
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &laquo;
+                    </span>
+                @else
+                    <a href="{{ $commands->previousPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &laquo;
+                    </a>
+                @endif
+
+                <span class="px-4 py-2 bg-front border-tf rounded">
+                    Страница {{ $commands->currentPage() }} из {{ $commands->lastPage() }}
+                </span>
+
+                @if($commands->hasMorePages())
+                    <a href="{{ $commands->nextPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &raquo;
+                    </a>
+                @else
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &raquo;
+                    </span>
+                @endif
+            </div>
+        @endif
     </div>
 </x-admin-layout>

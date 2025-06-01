@@ -18,11 +18,18 @@ class ChangesController extends Controller
     }
 
     // Админка - список изменений
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $changes = Section::where('type', 'changelog')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.sections.changes.index', compact('changes'));
     }

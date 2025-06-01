@@ -11,7 +11,7 @@ class CreateCharactersTable extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
             $table->string('name', 20);
-            $table->text('description');
+            $table->mediumText('description');
             $table->string('red_picture');
             $table->string('blu_picture')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

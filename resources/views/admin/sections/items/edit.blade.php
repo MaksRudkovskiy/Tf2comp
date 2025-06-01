@@ -21,16 +21,15 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Загрузка изображения -->
                 <div class="relative group my-4 w-32 h-32">
                     <label for="image" class="cursor-pointer">
-                        <div class="w-32 h-32 border-2 border-tf rounded-lg flex items-center justify-center overflow-hidden bg-back transition">
+                        <div class="w-32 h-32 border-2 border-tf rounded-lg flex items-center justify-center overflow-hidden bg-back transition" id="image-preview">
                             @if($item->image_path)
                                 <img src="{{ asset('storage/' . $item->image_path) }}"
                                      alt="{{ $item->name }}"
-                                     class="object-contain h-full w-[100px] h-[100px]">
+                                     class="object-contain w-full h-full">
                             @else
-                                <div class="text-gray-600 text-4xl">+</div>
+                                <div class="text-4xl">+</div>
                             @endif
                         </div>
                         <div class="absolute inset-0 opacity-0">
@@ -73,7 +72,7 @@
                     <div x-show="showUpside" class="mt-2">
                         <x-input-label for="upside" value="Преимущества" />
                         <x-text-area id="upside" name="upside" class="mt-1 block w-full h-24"
-                                     x-bind:required="showUpside">{{ old('upside', $item->upside) }}</x-text-area>
+                                     x-bind:required="showUpside" value="{{$item->upside}}">{{ old('upside', $item->upside) }}</x-text-area>
                     </div>
                 </div>
 
@@ -90,7 +89,7 @@
                     <div x-show="showDownside" class="mt-2">
                         <x-input-label for="downside" value="Недостатки" />
                         <x-text-area id="downside" name="downside" class="mt-1 block w-full h-24"
-                                     x-bind:required="showDownside">{{ old('downside', $item->downside) }}</x-text-area>
+                                     x-bind:required="showDownside" value="{{$item->downside}}">{{ old('downside', $item->downside) }}</x-text-area>
                     </div>
                 </div>
 
@@ -124,4 +123,6 @@
             </form>
         </div>
     </div>
+
+    <script src="{{asset('js/ItemPreviewChange.js')}}"></script>
 </x-admin-layout>

@@ -19,11 +19,19 @@ class BlogController extends Controller
     }
 
     // Админка - список постов
-    public function index()
+    // BlogController.php
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $posts = Section::where('type', 'blog')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.sections.blog.index', compact('posts'));
     }

@@ -9,6 +9,21 @@
             </a>
         </div>
 
+        <div class="bg-front border-tf rounded-lg px-6 py-8 mb-6">
+            <form method="GET" action="{{ route('admin.histories') }}" class="flex">
+                <x-text-input
+                    name="search"
+                    placeholder="Поиск по названию или содержанию"
+                    value="{{ request('search') }}"
+                    class="w-full"
+                />
+                <x-primary-button type="submit" class="ml-2">Найти</x-primary-button>
+                <a href="{{ route('admin.histories') }}" class="ml-2 text-center px-4 border-tf rounded hover:bg-catalog">
+                    Сбросить
+                </a>
+            </form>
+        </div>
+
         <div class="space-y-4">
             @forelse($histories as $history)
                 <div class="bg-front border-tf p-4 rounded-lg shadow flex justify-between items-center">
@@ -41,5 +56,35 @@
                 </div>
             @endforelse
         </div>
+
+        @if($histories->hasPages())
+            <div class="mt-6 flex justify-center items-center gap-4">
+                @if($histories->onFirstPage())
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &laquo;
+                    </span>
+                @else
+                    <a href="{{ $histories->previousPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &laquo;
+                    </a>
+                @endif
+
+                <span class="px-4 py-2 bg-front border-tf rounded">
+                    Страница {{ $histories->currentPage() }} из {{ $histories->lastPage() }}
+                </span>
+
+                @if($histories->hasMorePages())
+                    <a href="{{ $histories->nextPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &raquo;
+                    </a>
+                @else
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &raquo;
+                    </span>
+                @endif
+            </div>
+        @endif
     </div>
 </x-admin-layout>

@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 class ModesController extends Controller
 {
     // Публичная страница
-    public function index()
+    public function index(Request $request)
     {
-        $modes = Article::where('type', 'mode')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $search = $request->input('search');
 
-        return view('pages.modes', compact('modes'));
+        $modes = Article::where('type', 'modes')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.sections.modes.index', compact('modes'));
     }
 
     // Админка - список режимов

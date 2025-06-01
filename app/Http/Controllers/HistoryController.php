@@ -22,9 +22,19 @@ class HistoryController extends Controller
     }
 
     // Админка - список
-    public function index()
+    public function index(Request $request)
     {
-        $histories = Article::where('type', 'history')->latest()->get();
+        $search = $request->input('search');
+
+        $histories = Article::where('type', 'history')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('text', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
         return view('admin.sections.histories.index', compact('histories'));
     }
 

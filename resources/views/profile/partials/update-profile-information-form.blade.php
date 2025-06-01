@@ -9,22 +9,31 @@
         @csrf
         @method('patch')
 
-        <div class="flex items-center gap-4">
-            @if($user->avatar)
-                <img src="data:image/jpeg;base64,{{ base64_encode($user->avatar) }}"
-                     alt="User Avatar"
-                     class="h-20 w-20 rounded object-cover">
-            @else
-                <div class="h-20 w-20 rounded-full bg-custom-EBE3CB flex items-center justify-center">
-                    <span class="text-gray-600">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                </div>
-            @endif
+        <div class="gap-4">
 
             <div>
                 <x-input-label for="avatar" :value="__('Аватар')" />
-                <x-text-input id="avatar" name="avatar" type="file" class="border-tf bg-" />
-                <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+                <x-input-error class="my-2" :messages="$errors->get('avatar')" />
             </div>
+            <div class="relative group w-20 h-20">
+                <label for="avatar" class="cursor-pointer">
+                    <div class="w-20 h-20 rounded flex items-center justify-center overflow-hidden bg-back border-2 border-tf transition" id="avatar-preview">
+                        @if($user->avatar)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($user->avatar) }}"
+                                 alt="User Avatar"
+                                 class="object-cover w-full h-full">
+                        @else
+                            <div class="h-full w-full bg-custom-EBE3CB flex items-center justify-center">
+                                <span class="text-gray-600 text-2xl">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="absolute inset-0 opacity-0">
+                        <x-file-input id="avatar" name="avatar" class="w-full h-full" accept="image/jpeg,image/png" />
+                    </div>
+                </label>
+            </div>
+
         </div>
 
         <div>
@@ -48,4 +57,26 @@
             @endif
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatarInput = document.getElementById('avatar');
+            const avatarPreview = document.getElementById('avatar-preview');
+
+            avatarInput.addEventListener('change', function(e) {
+                if (e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        avatarPreview.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.classList.add('object-cover', 'w-full', 'h-full');
+                        avatarPreview.appendChild(img);
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+        });
+    </script>
+
 </section>

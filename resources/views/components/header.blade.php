@@ -41,7 +41,7 @@
                     <div class="text-center">
                         <button @click="isProfileOpen = !isProfileOpen" class="inline-block dark:text-[#EDEDEC]">
                             @if(Auth::user()->avatar)
-                                <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->avatar) }}" alt="User  Avatar" class="rounded-full h-10 w-10 object-cover">
+                                <img src="data:image/jpeg;base64,{{ base64_encode(Auth::user()->avatar) }}" alt="User  Avatar" class="rounded-full border-tf h-10 w-10 object-cover">
                             @else
                                 <div class="rounded-full bg-custom-EBE3CB h-10 w-10 flex items-center justify-center">
                                     <span class="text-gray-600">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>

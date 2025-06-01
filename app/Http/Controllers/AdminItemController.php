@@ -10,10 +10,37 @@ use Illuminate\Support\Facades\Storage;
 class AdminItemController extends Controller
 {
     // Список всех предметов
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+        $characterFilter = $request->input('character');
+
+        $items = Item::query()
+            ->when($search && $characterFilter, function($query) use ($search, $characterFilter) {
+                $query->where(function($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                })
+                    ->whereHas('characters', function($q) use ($characterFilter) {
+                        $q->where('characters_id', $characterFilter);
+                    });
+            })
+            ->when($search && !$characterFilter, function($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->when($characterFilter && !$search, function($query) use ($characterFilter) {
+                $query->whereHas('characters', function($q) use ($characterFilter) {
+                    $q->where('characters_id', $characterFilter);
+                });
+            })
+            ->with('characters')
+            ->orderBy('name')
+            ->paginate(15)
+            ->withQueryString();
+
         $characters = Character::all();
-        $items = Item::with('characters')->latest()->get();
+
         return view('admin.sections.items.index', compact('items', 'characters'));
     }
 
@@ -31,14 +58,18 @@ class AdminItemController extends Controller
             'name' => 'required|string|max:30',
             'caption' => 'nullable|string|max:100',
             'description' => 'required|string',
-            'show_upside' => 'boolean',
+            'show_upside' => 'sometimes|boolean',
             'upside' => 'nullable|string|required_if:show_upside,true',
-            'show_downside' => 'boolean',
+            'show_downside' => 'sometimes|boolean',
             'downside' => 'nullable|string|required_if:show_downside,true',
             'image' => 'required|image|mimes:jpeg,png|max:2048',
             'characters' => 'required|array|min:1',
             'characters.*' => 'exists:characters,id',
         ]);
+
+        // Устанавливаем значения по умолчанию для чекбоксов
+        $validated['show_upside'] = $request->has('show_upside');
+        $validated['show_downside'] = $request->has('show_downside');
 
         $imagePath = $request->file('image')->store('items', 'public');
 
