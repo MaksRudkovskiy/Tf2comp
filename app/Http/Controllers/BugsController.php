@@ -10,7 +10,10 @@ class BugsController extends Controller
     // Публичная часть (показать список)
     public function bugs()
     {
-        $bugs = Article::where('type', 'bug')->latest()->get();
+        $bugs = Article::where('type', 'bug')
+            ->latest()
+            ->paginate(15);
+
         return view('pages.bugs_list', compact('bugs'));
     }
 

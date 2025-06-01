@@ -10,12 +10,11 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        // Проверяем, существует ли уже админ
-        if (!User::where('email', 'admin@tf2compendium.com')->exists()) {
+        if (!User::where('email', 'admin@mail.ru')->exists()) {
             User::create([
                 'name' => 'Admin',
                 'email' => 'admin@mail.ru',
-                'password' => Hash::make('668822'), // Замените на надежный пароль
+                'password' => Hash::make('668822'),
                 'role' => 1
             ]);
 

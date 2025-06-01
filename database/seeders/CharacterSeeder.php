@@ -13,7 +13,7 @@ class CharacterSeeder extends Seeder
     public function run(): void
     {
         if (Character::count() >= 9) {
-            $this->command->info('уже просидированыы!');
+            $this->command->info('Классы уже просидированыы!');
             return;
         }
 

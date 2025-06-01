@@ -12,7 +12,7 @@ class ChangesController extends Controller
     {
         $changes = Section::where('type', 'changelog')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('pages.changes', compact('changes'));
     }

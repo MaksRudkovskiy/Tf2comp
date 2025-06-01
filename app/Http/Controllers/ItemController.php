@@ -34,7 +34,7 @@ class ItemController extends Controller
                     $q->where('characters_id', $characterId);
                 });
             })
-            ->orderBy('name')
+            ->orderBy('name', 'asc')
             ->paginate(16, ['*'], 'page', $page);
 
         $selectedItem = $selectedItemId

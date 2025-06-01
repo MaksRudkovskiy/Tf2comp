@@ -8,7 +8,7 @@
                 <div>
                     <label class="block">Название раздела</label>
                     <input type="text" name="title" value="{{ old('title', $command->title) }}"
-                           required maxlength="25" class="w-full px-3 py-2 bg-back border-tf border-tf rounded">
+                           required maxlength="45" class="w-full px-3 py-2 bg-back border-tf border-tf rounded">
                 </div>
                 <div>
                     <label class="block">Описание команд</label>

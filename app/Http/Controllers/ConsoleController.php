@@ -12,7 +12,7 @@ class ConsoleController extends Controller
     {
         $commands = Article::where('type', 'console')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('pages.console', compact('commands'));
     }

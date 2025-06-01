@@ -12,7 +12,7 @@ class CreateMistakesTable extends Migration
             $table->id();
             $table->text('text');
             $table->dateTime('date'); // Убедитесь что это dateTime
-            $table->string('status')->default('pending');
+            $table->enum('status', ['declined', 'pending', 'acknowledged', 'fixed'])->default('pending');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

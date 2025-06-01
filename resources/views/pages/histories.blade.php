@@ -22,5 +22,24 @@
                 </div>
             @endforelse
         </div>
+
+        @if ($histories->hasPages())
+            <div class="flex items-center gap-x-3 justify-center my-4">
+
+                @if ($histories->onFirstPage())
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&laquo;</span>
+                @else
+                    <a href="{{ $histories->previousPageUrl() }}" rel="prev" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&laquo;</a>
+                @endif
+
+                <span class="px-4 py-2 bg-front border-tf rounded">{{ $histories->currentPage() }} / {{ $histories->lastPage() }}</span>
+
+                @if ($histories->hasMorePages())
+                    <a href="{{ $histories->nextPageUrl() }}" rel="next" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&raquo;</a>
+                @else
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&raquo;</span>
+                @endif
+            </div>
+        @endif
     </div>
 </x-app-layout>

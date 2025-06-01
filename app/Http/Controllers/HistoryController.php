@@ -10,7 +10,10 @@ class HistoryController extends Controller
     // Публичная часть (показать список)
     public function histories()
     {
-        $histories = Article::where('type', 'history')->latest()->get();
+        $histories = Article::where('type', 'history')
+            ->latest()
+            ->paginate(15);
+
         return view('pages.histories', compact('histories'));
     }
 

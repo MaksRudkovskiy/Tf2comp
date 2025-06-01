@@ -1,6 +1,6 @@
 <x-admin-layout>
     <x-slot name="pageTitle">Управление игровыми режимами</x-slot>
-    <div class="w-3/4 mx-auto mt-12 h-full block">
+    <div class="w-3/4 mx-auto my-12 h-full block">
         <div class="mb-6 flex">
             <a href="{{ route('admin.modes.create') }}">
                 <x-primary-button>
@@ -61,5 +61,35 @@
 
             @endforelse
         </div>
+
+        @if($modes->hasPages())
+            <div class="mt-6 flex justify-center items-center gap-4">
+                @if($modes->onFirstPage())
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &laquo;
+                    </span>
+                @else
+                    <a href="{{ $modes->previousPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &laquo;
+                    </a>
+                @endif
+
+                <span class="px-4 py-2 bg-front border-tf rounded">
+                    Страница {{ $modes->currentPage() }} из {{ $modes->lastPage() }}
+                </span>
+
+                @if($modes->hasMorePages())
+                    <a href="{{ $modes->nextPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &raquo;
+                    </a>
+                @else
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &raquo;
+                    </span>
+                @endif
+            </div>
+        @endif
     </div>
 </x-admin-layout>

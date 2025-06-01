@@ -14,4 +14,23 @@
             </div>
         @endforeach
     </div>
+
+    @if ($changes->hasPages())
+        <div class="flex items-center gap-x-3 justify-center my-4">
+
+            @if ($changes->onFirstPage())
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&laquo;</span>
+            @else
+                <a href="{{ $changes->previousPageUrl() }}" rel="prev" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&laquo;</a>
+            @endif
+
+            <span class="px-4 py-2 bg-front border-tf rounded">{{ $changes->currentPage() }} / {{ $changes->lastPage() }}</span>
+
+            @if ($changes->hasMorePages())
+                <a href="{{ $changes->nextPageUrl() }}" rel="next" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&raquo;</a>
+            @else
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&raquo;</span>
+            @endif
+        </div>
+    @endif
 </x-app-layout>

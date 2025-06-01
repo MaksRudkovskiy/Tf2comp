@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="pageTitle">Управление багами и фишками</x-slot>
 
-    <div class="w-3/4 mx-auto mt-12 h-full block">
+    <div class="w-3/4 mx-auto my-12 h-full block">
 
         <div class="mb-6 flex">
             <a href="{{ route('admin.bugs.create') }}">

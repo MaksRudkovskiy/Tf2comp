@@ -8,18 +8,15 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    // Публичная страница
     public function blog()
     {
         $posts = Section::where('type', 'blog')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10); // 10 элементов на страницу
 
         return view('pages.blog', compact('posts'));
     }
 
-    // Админка - список постов
-    // BlogController.php
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -36,13 +33,11 @@ class BlogController extends Controller
         return view('admin.sections.blog.index', compact('posts'));
     }
 
-    // Админка - форма создания
     public function create()
     {
         return view('admin.sections.blog.create');
     }
 
-    // Админка - сохранение
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -60,14 +55,12 @@ class BlogController extends Controller
         return redirect()->route('admin.blog')->with('success', 'Пост добавлен!');
     }
 
-    // Админка - форма редактирования
     public function edit($id)
     {
         $post = Section::where('type', 'blog')->findOrFail($id);
         return view('admin.sections.blog.edit', compact('post'));
     }
 
-    // Админка - обновление
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -81,7 +74,6 @@ class BlogController extends Controller
         return redirect()->route('admin.blog')->with('success', 'Пост обновлен!');
     }
 
-    // Админка - удаление
     public function destroy($id)
     {
         $post = Section::where('type', 'blog')->findOrFail($id);

@@ -7,12 +7,15 @@
                         str_starts_with($currentRoute, 'character') ||
                         in_array($currentRoute, ['weapons', 'modes', 'items', 'histories', 'history']) ||
                         str_starts_with($currentRoute, 'bugs_') ||
+                        str_starts_with($currentRoute, 'history_') ||
                         $currentRoute === 'console';
 
         // Проверка для изменений (включая все дочерние маршруты)
         $isChanges = $currentRoute === 'changes' || str_starts_with($currentRoute, 'changes.');
 
         // Проверка для блога (включая все дочерние маршруты)
+        $isBlog = $currentRoute === 'blog' || str_starts_with($currentRoute, 'blog.');
+
         $isBlog = $currentRoute === 'blog' || str_starts_with($currentRoute, 'blog.');
 
         // Проверка для админки (включая все дочерние маршруты)

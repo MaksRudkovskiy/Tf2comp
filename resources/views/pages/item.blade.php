@@ -29,7 +29,7 @@
             <div class="flex mt-4">
                 <!-- Сетка предметов слева -->
                 <div class="grid gap-4 grid-cols-4 max-w-fit" style="min-height: calc(4 * (theme('spacing.28') + 3 * theme('spacing.4')))">
-                    @foreach($items as $item)
+                    @forelse($items as $item)
                         <a href="{{ route('items', [
                             'character' => request('character'),
                             'selected_item' => $item->id,
@@ -43,7 +43,11 @@
                                      class="max-h-full max-w-full">
                             @endif
                         </a>
-                    @endforeach
+                    @empty
+                        <div class="w-full text-center py-8">
+                            <p class="font-tf2 text-lg">Нету предметов с такими параметрами</p>
+                        </div>
+                    @endforelse
 
                     <!-- Пустые ячейки для заполнения сетки -->
                     @for($i = 0; $i < max(0, 16 - $items->count()); $i++)

@@ -23,4 +23,23 @@
             @endforelse
         </div>
     </div>
+
+    @if ($bugs->hasPages())
+        <div class="flex items-center gap-x-3 justify-center my-4">
+
+            @if ($bugs->onFirstPage())
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&laquo;</span>
+            @else
+                <a href="{{ $bugs->previousPageUrl() }}" rel="prev" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&laquo;</a>
+            @endif
+
+            <span class="px-4 py-2 bg-front border-tf rounded">{{ $bugs->currentPage() }} / {{ $bugs->lastPage() }}</span>
+
+            @if ($bugs->hasMorePages())
+                <a href="{{ $bugs->nextPageUrl() }}" rel="next" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&raquo;</a>
+            @else
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&raquo;</span>
+            @endif
+        </div>
+    @endif
 </x-app-layout>

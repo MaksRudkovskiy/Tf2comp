@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             ModeratorSeeder::class,
             ItemSeeder::class,
+            ModesSeeder::class,
+            ConsoleSeeder::class,
         ]);
 
 

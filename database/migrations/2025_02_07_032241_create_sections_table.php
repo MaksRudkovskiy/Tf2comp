@@ -10,7 +10,7 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 25);
+            $table->string('title', 45);
             $table->text('text');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->default(1);
             $table->enum('type', ['blog', 'changelog']);

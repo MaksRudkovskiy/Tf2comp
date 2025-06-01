@@ -8,9 +8,13 @@ use App\Models\Section;
 
 class BlogSeeder extends Seeder
 {
-
     public function run(): void
     {
+        if (Section::where('type', 'blog')->count() >= 1) {
+            $this->command->info('Блог уже просидирован!');
+            return;
+        }
+
         Section::create(
             [
                 'title' => 'Всем привет!',

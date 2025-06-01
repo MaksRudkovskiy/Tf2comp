@@ -2,17 +2,7 @@
     <x-slot name="pageTitle">Игровые режимы</x-slot>
 
     <div class="w-3/4 mx-auto pb-12">
-        <div class="mt-12">
-            <h1 class="border-bottom-EBE3CB text-2xl">
-                Предисловие
-            </h1>
-
-            <p class="font-tf2 text-xl mt-5">
-                Данная статья содержит в себе список игровых режимов для Team Fortress 2. С момента официального выхода игры она имела всего три игровых режима: Захват флага, Захват контрольных точек и Контроль территории, однако благодаря многочисленным обновлениям, список режимов пополнился еще на одиннадцать (Сопровождение, Арена, Царь горы, Гонка вагонеток, Средневековье, Особая доставка, Манн против машин, Уничтожение роботов, Супер-Манн, Дай пас и Истребление), увеличив общее их число до четырнадцати, наряду с двумя картами для режима тренировки. Игровые режимы разделяют между собой 108 официальных карт, предлагая игрокам уникальный стиль и неповторимость сценариев матчей в Team Fortress 2.
-            </p>
-        </div>
-
-        @foreach($modes as $mode)
+        @forelse($modes as $mode)
             <div class="mt-12">
                 <h1 class="border-bottom-EBE3CB text-2xl">
                     {{ $mode->title }}
@@ -22,6 +12,29 @@
                     {!! nl2br(e($mode->text)) !!}
                 </p>
             </div>
-        @endforeach
+            @empty
+            <div class="w-full text-center py-8">
+                <p class="font-tf2 text-lg">Нету данных о игровых режимах</p>
+            </div>
+        @endforelse
     </div>
+
+    @if ($modes->hasPages())
+        <div class="flex items-center gap-x-3 justify-center my-4">
+
+            @if ($modes->onFirstPage())
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&laquo;</span>
+            @else
+                <a href="{{ $modes->previousPageUrl() }}" rel="prev" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&laquo;</a>
+            @endif
+
+            <span class="px-4 py-2 bg-front border-tf rounded">{{ $modes->currentPage() }} / {{ $modes->lastPage() }}</span>
+
+            @if ($modes->hasMorePages())
+                <a href="{{ $modes->nextPageUrl() }}" rel="next" class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">&raquo;</a>
+            @else
+                <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">&raquo;</span>
+            @endif
+        </div>
+    @endif
 </x-app-layout>

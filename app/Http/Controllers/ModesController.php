@@ -11,7 +11,7 @@ class ModesController extends Controller
     {
         $modes = Article::where('type', 'mode')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('pages.modes', compact('modes'));
     }
@@ -34,11 +34,18 @@ class ModesController extends Controller
     }
 
     // Админка - список режимов
-    public function adminIndex()
+    public function AdminIndex(Request $request)
     {
+        $search = $request->input('search');
+
         $modes = Article::where('type', 'mode')
+            ->when($search, function($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")->where('type', 'mode')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'mode');
+            })
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.sections.modes.index', compact('modes'));
     }
