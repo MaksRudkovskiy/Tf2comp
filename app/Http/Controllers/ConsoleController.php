@@ -24,8 +24,8 @@ class ConsoleController extends Controller
 
         $commands = Article::where('type', 'console')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'console')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'console');
             })
             ->latest()
             ->paginate(15)

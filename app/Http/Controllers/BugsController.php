@@ -28,8 +28,8 @@ class BugsController extends Controller
 
         $bugs = Article::where('type', 'bug')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'bug')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'bug');
             })
             ->latest()
             ->paginate(15)

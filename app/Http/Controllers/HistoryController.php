@@ -28,8 +28,8 @@ class HistoryController extends Controller
 
         $histories = Article::where('type', 'history')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'history')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'history');
             })
             ->latest()
             ->paginate(15)

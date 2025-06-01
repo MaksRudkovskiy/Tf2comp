@@ -26,8 +26,8 @@ class BlogController extends Controller
 
         $posts = Section::where('type', 'blog')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'blog')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'blog');
             })
             ->latest()
             ->paginate(15)

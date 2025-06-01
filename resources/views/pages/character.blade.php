@@ -1,47 +1,66 @@
 <x-app-layout>
     <x-slot name="pageTitle">{{ $character->name }}</x-slot>
 
-    <div class="w-3/4 mx-auto flex justify-between my-10">
-        <div class="flex">
-            <!-- Контейнер для изображения -->
-            <div class="relative w-1/3 h-[750px] flex items-center justify-center overflow-hidden">
-                @if($character->red_picture)
-                    <img id="character-image"
-                         src="{{ $character->getImageUrl('red_picture') }}"
-                         alt="{{ $character->name }}"
-                         class="object-contain w-full h-full"
-                         data-red-src="{{ $character->getImageUrl('red_picture') }}"
-                         @if($character->blu_picture)
-                             data-blu-src="{{ $character->getImageUrl('blu_picture') }}"
-                        @endif>
-                @else
-                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span>Изображение отсутствует</span>
+    <div class="flex relative">
+        <!-- Боковая панель с классами -->
+        <div class="absolute left-0 top-20 transform bg-front flex flex-col rounded-r-sm py-5 z-10 border-tf md:w-20 w-16">
+            @foreach($allCharacters as $char)
+                <a href="{{ route('character.show', $char->id) }}"
+                   class="group flex flex-col items-center
+                          @if($char->id == $character->id) opacity-100 @else opacity-50 hover:opacity-75 @endif">
+                    <span class="text-4xl group-hover:text-custom-text-hover font-tf2icons">
+                        {{ $char->getIconLetter() }}
+                    </span>
+                    <span class="text-xs mt-2 group-hover:text-custom-text-hover text-center">
+                        {{ $char->name }}
+                    </span>
+                </a>
+            @endforeach
+        </div>
+
+        <!-- Основное содержимое -->
+        <div class="flex-1">
+            <div class="w-3/4 mx-auto relative flex justify-between my-10">
+                <div class="flex">
+                    <!-- Контейнер для изображения -->
+                    <div class="relative w-1/3 h-[750px] flex items-center justify-center overflow-hidden">
+                        @if($character->red_picture)
+                            <img id="character-image"
+                                 src="{{ $character->getImageUrl('red_picture') }}"
+                                 alt="{{ $character->name }}"
+                                 class="object-contain w-full h-full"
+                                 data-red-src="{{ $character->getImageUrl('red_picture') }}"
+                                 @if($character->blu_picture)
+                                     data-blu-src="{{ $character->getImageUrl('blu_picture') }}"
+                                @endif>
+                        @else
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <span>Изображение отсутствует</span>
+                            </div>
+                        @endif
                     </div>
-                @endif
-            </div>
 
-            <div class="flex ml-4 w-2/3">
-                <div class="flex flex-col gap-4 mr-9">
-                    <!-- Кнопки переключения -->
-                    <x-primary-button id="red-team-btn"
-                            class="text-custom-ret hover:text-custom-EBE3CB w-32 text-4xl">
-                        Крс
-                    </x-primary-button>
-                    @if(!isset($character->blu_picture))
+                    <div class="flex ml-4 w-2/3">
+                        <div class="flex flex-col gap-4 mr-9">
+                            <!-- Кнопки переключения -->
+                            <x-primary-button id="red-team-btn"
+                                              class="text-custom-ret hover:text-custom-EBE3CB w-32 text-4xl">
+                                Крс
+                            </x-primary-button>
+                            @if($character->blu_picture)
+                                <x-primary-button id="blu-team-btn"
+                                                  class="text-custom-blu hover:text-custom-EBE3CB w-32 text-4xl">
+                                    Син
+                                </x-primary-button>
+                            @endif
+                        </div>
 
-                    @else
-                    <x-primary-button id="blu-team-btn"
-                            class="text-custom-blu hover:text-custom-EBE3CB w-32 text-4xl">
-                        Син
-                    </x-primary-button>
-                    @endif
-                </div>
-
-                <div class="bg-front border-tf rounded-lg p-7 mb-8 min-w-[calc(600px-2rem)]">
-                    <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">{{$character->name}}</h3>
-                    <div class="space-y-4">
-                        <p class="font-tf2">{{ $character->description }}</p>
+                        <div class="bg-front border-tf rounded-lg p-7 mb-8 min-w-[calc(600px-2rem)]">
+                            <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">{{$character->name}}</h3>
+                            <div class="space-y-4">
+                                <p class="font-tf2">{{ $character->description }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,21 +80,23 @@
                 if (characterImage.dataset.redSrc) {
                     characterImage.src = characterImage.dataset.redSrc;
                     characterImage.alt = "{{ $character->name }} (RED)";
-                    // Добавляем/удаляем классы активности
                     redTeamBtn.classList.add('font-bold', 'text-opacity-100');
-                    bluTeamBtn.classList.remove('font-bold', 'text-opacity-100');
+                    if (bluTeamBtn) {
+                        bluTeamBtn.classList.remove('font-bold', 'text-opacity-100');
+                    }
                 }
             });
 
-            bluTeamBtn.addEventListener('click', function() {
-                if (characterImage.dataset.bluSrc) {
-                    characterImage.src = characterImage.dataset.bluSrc;
-                    characterImage.alt = "{{ $character->name }} (BLU)";
-                    // Добавляем/удаляем классы активности
-                    bluTeamBtn.classList.add('font-bold', 'text-opacity-100');
-                    redTeamBtn.classList.remove('font-bold', 'text-opacity-100');
-                }
-            });
+            if (bluTeamBtn) {
+                bluTeamBtn.addEventListener('click', function() {
+                    if (characterImage.dataset.bluSrc) {
+                        characterImage.src = characterImage.dataset.bluSrc;
+                        characterImage.alt = "{{ $character->name }} (BLU)";
+                        bluTeamBtn.classList.add('font-bold', 'text-opacity-100');
+                        redTeamBtn.classList.remove('font-bold', 'text-opacity-100');
+                    }
+                });
+            }
 
             // Инициализация - активна красная команда
             redTeamBtn.classList.add('font-bold', 'text-opacity-100');

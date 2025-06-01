@@ -24,8 +24,8 @@ class ChangesController extends Controller
 
         $changes = Section::where('type', 'changelog')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'changelog')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'changelog');
             })
             ->latest()
             ->paginate(15)

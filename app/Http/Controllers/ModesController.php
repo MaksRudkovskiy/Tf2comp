@@ -7,15 +7,24 @@ use Illuminate\Http\Request;
 
 class ModesController extends Controller
 {
+    public function index()
+    {
+        $modes = Article::where('type', 'mode')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('pages.modes', compact('modes'));
+    }
+
     // Публичная страница
-    public function index(Request $request)
+    public function modes(Request $request)
     {
         $search = $request->input('search');
 
         $modes = Article::where('type', 'modes')
             ->when($search, function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
+                $query->where('title', 'like', "%{$search}%")->where('type', 'modes')
+                    ->orWhere('text', 'like', "%{$search}%")->where('type', 'modes');
             })
             ->latest()
             ->paginate(15)

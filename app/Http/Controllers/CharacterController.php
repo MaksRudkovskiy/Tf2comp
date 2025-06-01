@@ -12,7 +12,9 @@ class CharacterController extends Controller
     public function show($id)
     {
         $character = Character::findOrFail($id);
-        return view('pages.character', compact('character'));
+        $allCharacters = Character::orderBy('id')->get(); // Получаем всех персонажей для навигации
+
+        return view('pages.character', compact('character', 'allCharacters'));
     }
 
     public function update(Request $request, Character $character)
@@ -29,14 +31,11 @@ class CharacterController extends Controller
             if ($request->hasFile($field)) {
                 // Удаляем старое изображение (если оно не дефолтное)
                 if ($character->$field && !str_starts_with($character->$field, 'characters/default/')) {
-                    File::delete(public_path("storage/{$character->$field}"));
+                    Storage::disk('public')->delete($character->$field);
                 }
 
                 // Сохраняем новое изображение
-                $filename = Str::random(40) . '.' . $request->file($field)->extension();
-                $path = "characters/uploaded/{$filename}";
-                $request->file($field)->move(public_path('storage/characters/uploaded'), $filename);
-
+                $path = $request->file($field)->store('characters/uploaded', 'public');
                 $updateData[$field] = $path;
             }
         }
