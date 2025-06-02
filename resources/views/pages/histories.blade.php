@@ -6,7 +6,7 @@
             @forelse($histories as $history)
                 <div class="p-5 bg-front border-tf w-full mw420 hover:bg-front/80 transition-colors">
                     <a href="{{ route('history_detail', ['id' => $history->id]) }}" class="block">
-                        <h2 class="text-xl text-center font-tf2">
+                        <h2 class="text-xl text-center">
                             {{ $history->title }}
                         </h2>
 

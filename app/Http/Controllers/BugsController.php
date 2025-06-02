@@ -80,11 +80,16 @@ class BugsController extends Controller
             'text' => 'required|string',
         ]);
 
-        $bug = Article::where('type', 'bug')->findOrFail($id);
-        $bug->update($validated);
+        $article = Article::findOrFail($id);
+        $article->update([
+            'title' => $validated['title'],
+            'text' => $validated['text'],
+            'user_id' => auth()->id()
+        ]);
 
         return redirect()->route('admin.bugs')->with('success', 'Статья обновлена!');
     }
+
 
     // Админка - удалить
     public function destroy($id)

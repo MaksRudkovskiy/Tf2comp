@@ -73,11 +73,16 @@ class ConsoleController extends Controller
             'text' => 'required|string',
         ]);
 
-        $command = Article::where('type', 'console')->findOrFail($id);
-        $command->update($validated);
+        $article = Article::findOrFail($id);
+        $article->update([
+            'title' => $validated['title'],
+            'text' => $validated['text'],
+            'user_id' => auth()->id() // Добавляем текущего пользователя как редактора
+        ]);
 
-        return redirect()->route('admin.console')->with('success', 'Команда обновлена!');
+        return redirect()->route('admin.bugs')->with('success', 'Статья обновлена!');
     }
+
 
     // Админка - удаление
     public function destroy($id)

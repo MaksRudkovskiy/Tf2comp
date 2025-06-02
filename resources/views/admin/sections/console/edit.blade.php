@@ -1,6 +1,11 @@
 <x-admin-layout>
     <x-slot name="pageTitle">Редактировать консольную команду</x-slot>
     <div class="w-3/4 mx-auto mt-12 h-full block">
+
+        <h1 class="border-bottom-EBE3CB text-2xl mb-4">
+            {{ $command->title }} - Редактирование
+        </h1>
+
         <form action="{{ route('admin.console.update', $command->id) }}" method="POST">
             @csrf
             @method('PUT')

@@ -6,7 +6,7 @@
             @forelse($bugs as $bug)
                 <div class="p-5 bg-front border-tf w-full mw420 hover:bg-front/80 transition-colors">
                     <a href="{{ route('bugs_detail', ['id' => $bug->id]) }}" class="block">
-                        <h2 class="text-xl text-center font-tf2">
+                        <h2 class="text-xl text-center">
                             {{ $bug->title }}
                         </h2>
 

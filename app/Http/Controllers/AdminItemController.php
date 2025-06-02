@@ -122,6 +122,7 @@ class AdminItemController extends Controller
                 'upside' => $validated['show_upside'] ? $validated['upside'] : null,
                 'show_downside' => $validated['show_downside'],
                 'downside' => $validated['show_downside'] ? $validated['downside'] : null,
+                'user_id' => auth()->id(),
             ] + (isset($validated['image_path']) ? ['image_path' => $validated['image_path']] : []));
 
         $item->characters()->sync($validated['characters']);

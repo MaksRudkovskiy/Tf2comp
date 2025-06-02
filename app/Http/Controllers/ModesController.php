@@ -93,11 +93,16 @@ class ModesController extends Controller
             'text' => 'required|string',
         ]);
 
-        $mode = Article::where('type', 'mode')->findOrFail($id);
-        $mode->update($validated);
+        $article = Article::findOrFail($id);
+        $article->update([
+            'title' => $validated['title'],
+            'text' => $validated['text'],
+            'user_id' => auth()->id() // Добавляем текущего пользователя как редактора
+        ]);
 
-        return redirect()->route('admin.modes')->with('success', 'Режим обновлен!');
+        return redirect()->route('admin.bugs')->with('success', 'Статья обновлена!');
     }
+
 
     // Админка - удаление
     public function destroy($id)

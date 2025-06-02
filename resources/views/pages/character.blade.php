@@ -56,7 +56,19 @@
                         </div>
 
                         <div class="bg-front border-tf rounded-lg p-7 mb-8 min-w-[calc(600px-2rem)]">
-                            <h3 class="text-2xl mb-4 w-full border-bottom-EBE3CB">{{$character->name}}</h3>
+                            <div class="flex justify-between border-bottom-EBE3CB w-full mb-2">
+                                <h3 class="text-2xl mb-2">{{$character->name}}</h3>
+                                <div class="flex items-center mb-2">
+                                    @if($character->editor->avatar)
+                                        <img class="h-6 w-6 rounded-full mr-2" src="data:image/jpeg;base64,{{ base64_encode($character->editor->avatar) }}" alt="">
+                                    @else
+                                        <div class="h-6 w-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                                            <span class="text-xs text-gray-600">{{ strtoupper(substr($character->editor->name, 0, 1)) }}</span>
+                                        </div>
+                                    @endif
+                                    <span class="text-xs text-gray-500">Последнее изменение: {{ $character->editor->name }}, {{ $character->updated_at->diffForHumans() }}</span>
+                                </div>
+                            </div>
                             <div class="space-y-4">
                                 <p class="font-tf2">{{ $character->description }}</p>
                             </div>

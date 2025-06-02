@@ -14,10 +14,22 @@
 
     <div class="w-3/4 mx-auto my-16">
         <div class="bg-front border-tf rounded-lg p-8">
+                <div class="flex justify-between border-bottom-EBE3CB">
+                    <h1 class=" text-2xl">
+                        {{$character->name}} - Редактирование
+                    </h1>
 
-            <h1 class="border-bottom-EBE3CB text-2xl">
-                {{$character->name}} - Редактирование
-            </h1>
+                    <div class="flex items-center mb-4">
+                        @if($character->editor->avatar)
+                            <img class="h-6 w-6 rounded-full mr-2" src="data:image/jpeg;base64,{{ base64_encode($character->editor->avatar) }}" alt="">
+                        @else
+                            <div class="h-6 w-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                                <span class="text-xs text-gray-600">{{ strtoupper(substr($character->editor->name, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                        <span class="text-xs text-gray-500">Последнее изменение: {{ $character->editor->name }}, {{ $character->updated_at->diffForHumans() }}</span>
+                    </div>
+                </div>
 
             <form method="POST" class="mt-5" action="{{ route('admin.characters.update', $character) }}" enctype="multipart/form-data">
                 @csrf

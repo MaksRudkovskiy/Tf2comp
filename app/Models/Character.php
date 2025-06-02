@@ -29,6 +29,11 @@ class Character extends Model
         return $this->belongsToMany(Item::class, 'character_items', 'characters_id', 'items_id');
     }
 
+    public function editor()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function getIconLetter()
     {
         return match($this->name) {

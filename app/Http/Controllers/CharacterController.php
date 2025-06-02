@@ -25,7 +25,7 @@ class CharacterController extends Controller
             'blu_picture' => 'nullable|image|mimes:jpeg,png|max:2048'
         ]);
 
-        $updateData = ['description' => $validated['description']];
+        $updateData = ['description' => $validated['description'], 'user_id' => auth()->id()];
 
         foreach (['red_picture', 'blu_picture'] as $field) {
             if ($request->hasFile($field)) {

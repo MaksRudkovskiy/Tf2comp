@@ -1,6 +1,11 @@
 <x-admin-layout>
     <x-slot name="pageTitle">Редактировать игровой режим</x-slot>
     <div class="w-3/4 mx-auto mt-12 h-full block">
+
+        <h1 class="border-bottom-EBE3CB text-2xl mb-4">
+            {{ $mode->title }} - Редактирование
+        </h1>
+
         <form action="{{ route('admin.modes.update', $mode->id) }}" method="POST">
             @csrf
             @method('PUT')

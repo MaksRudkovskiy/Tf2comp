@@ -78,11 +78,16 @@ class HistoryController extends Controller
             'text' => 'required|string',
         ]);
 
-        $history = Article::where('type', 'history')->findOrFail($id);
-        $history->update($validated);
+        $article = Article::findOrFail($id);
+        $article->update([
+            'title' => $validated['title'],
+            'text' => $validated['text'],
+            'user_id' => auth()->id() // Добавляем текущего пользователя как редактора
+        ]);
 
-        return redirect()->route('admin.histories')->with('success', 'История обновлена!');
+        return redirect()->route('admin.bugs')->with('success', 'Статья обновлена!');
     }
+
 
     // Админка - удалить
     public function destroy($id)

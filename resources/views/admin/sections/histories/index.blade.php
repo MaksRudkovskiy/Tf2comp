@@ -30,6 +30,16 @@
                     <div>
                         <h3 class="text-lg">{{ $history->title }}</h3>
                         <p class="font-tf2 mt-1">{{ Str::limit($history->text, 100) }}</p>
+                        <div class="flex items-center mt-2">
+                            @if($history->editor->avatar)
+                                <img class="h-6 w-6 rounded-full mr-2" src="data:image/jpeg;base64,{{ base64_encode($history->editor->avatar) }}" alt="">
+                            @else
+                                <div class="h-6 w-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                                    <span class="text-xs text-gray-600">{{ strtoupper(substr($history->editor->name, 0, 1)) }}</span>
+                                </div>
+                            @endif
+                            <span class="text-xs text-gray-500">Последнее изменение: {{ $history->editor->name }}, {{ $history->updated_at->diffForHumans() }}</span>
+                        </div>
                     </div>
                     <div class="flex space-x-2">
                         <a href="{{ route('admin.histories.edit', $history->id) }}"
