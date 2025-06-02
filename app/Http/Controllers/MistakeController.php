@@ -27,7 +27,6 @@ class MistakeController extends Controller
 
         Mistake::create([
             'text' => $validated['text'],
-            'date' => now(), // Используем now() вместо request->date
             'user_id' => auth()->id(),
             'status' => 'pending'
         ]);

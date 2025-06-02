@@ -8,8 +8,4 @@ class Section extends Model
 {
     protected $fillable = ['title', 'text', 'type', 'user_id'];
 
-    public function comment()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
 }

@@ -99,8 +99,8 @@
             </div>
 
             {{$slot}}
-
-            <div class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-front flex flex-col rounded-r-sm py-5 gap-y-2.5 z-10 border-tf md:w-20 w-16">
+            @if(Auth::user()->id == 1)
+            <div class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-front flex flex-col rounded-l-sm py-5 gap-y-2.5 z-10 border-tf md:w-20 w-16">
 
 
                 <a href="{{ route('admin.stats') }}" class="group @if($isActive('admin.stats')) opacity-100 @else opacity-50 @endif">
@@ -108,6 +108,9 @@
                     <p class="text-center font-tf2 text-sm mt-1">Статы</p>
                 </a>
             </div>
+            @else
+
+            @endif
         </div>
 
     </div>

@@ -10,7 +10,7 @@ class ModesController extends Controller
     public function index()
     {
         $modes = Article::where('type', 'mode')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->paginate(10);
 
         return view('pages.modes', compact('modes'));

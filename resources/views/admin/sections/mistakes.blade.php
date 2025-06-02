@@ -3,17 +3,17 @@
 
     <div class="w-3/4 mx-auto my-16">
         <div class="bg-front border-tf rounded-lg p-8">
-            <h1 class="text-2xl mb-6 border-b border-custom-EBE3CB pb-2">Сообщения об ошибках</h1>
+            <h1 class="text-2xl mb-6 border-b pb-2">Сообщения об ошибках</h1>
 
             <div class="space-y-4">
                 @forelse($mistakes as $mistake)
-                    <div class="bg-block p-4 rounded-lg border border-custom-EBE3CB/30 hover:border-custom-EBE3CB/60 transition-colors">
+                    <div class="bg-block p-4 rounded-lg border-tf transition-colors">
                         <div class="flex justify-between items-start">
                             <div>
                                 <h3 class="font-bold text-lg">
                                     {{ $mistake->user->name ?? 'Аноним' }}
                                 </h3>
-                                <p class="text-gray-300 mt-1">{{ \Carbon\Carbon::parse($mistake->date)->format('d.m.Y H:i') }}</p>
+                                <p class="font-tf2 mt-1">{{ \Carbon\Carbon::parse($mistake->date)->format('d.m.Y H:i') }}</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <form method="POST" action="{{ route('admin.mistakes.update', $mistake) }}">
@@ -39,7 +39,7 @@
                                 </form>
                             </div>
                         </div>
-                        <p class="mt-3 text-gray-100">{{ $mistake->text }}</p>
+                        <p class="mt-3 font-tf2">{{ $mistake->text }}</p>
                     </div>
                 @empty
                     <div class="text-center py-8 text-gray-400">
@@ -48,5 +48,36 @@
                 @endforelse
             </div>
         </div>
+
+        @if($mistakes->hasPages())
+            <div class="mt-6 flex justify-center items-center gap-4">
+                @if($mistakes->onFirstPage())
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &laquo;
+                    </span>
+                @else
+                    <a href="{{ $mistakes->previousPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &laquo;
+                    </a>
+                @endif
+
+                <span class="px-4 py-2 bg-front border-tf rounded">
+                    Страница {{ $mistakes->currentPage() }} из {{ $mistakes->lastPage() }}
+                </span>
+
+                @if($mistakes->hasMorePages())
+                    <a href="{{ $mistakes->nextPageUrl() }}&{{ http_build_query(request()->except('page')) }}"
+                       class="px-4 py-2 bg-front border-tf rounded hover:bg-catalog transition">
+                        &raquo;
+                    </a>
+                @else
+                    <span class="px-4 py-2 bg-front border-tf rounded text-gray-500 cursor-not-allowed">
+                        &raquo;
+                    </span>
+                @endif
+            </div>
+        @endif
+
     </div>
 </x-admin-layout>

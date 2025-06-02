@@ -56,7 +56,7 @@ class AdminController extends Controller
 
     public function mistakes()
     {
-        $mistakes = Mistake::with('user')->latest()->get();
+        $mistakes = Mistake::with('user')->latest()->paginate(10);
         return view('admin.sections.mistakes', compact('mistakes'));
     }
 }

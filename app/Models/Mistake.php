@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mistake extends Model
 {
-    protected $fillable = ['text', 'date', 'status', 'user_id'];
+    protected $fillable = ['text', 'status', 'user_id'];
 
     protected $dates = ['date'];
 
