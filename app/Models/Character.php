@@ -9,7 +9,6 @@ class Character extends Model
 {
     protected $fillable = ['name', 'description', 'red_picture', 'blu_picture', 'user_id'];
 
-    // Геттер для получения полного URL изображения
     public function getRedPictureUrlAttribute()
     {
         return $this->getImageUrl($this->red_picture);
@@ -25,7 +24,6 @@ class Character extends Model
         return $this->$field ? asset("storage/{$this->$field}") : null;
     }
 
-    // Добавить в класс Character
     public function items()
     {
         return $this->belongsToMany(Item::class, 'character_items', 'characters_id', 'items_id');

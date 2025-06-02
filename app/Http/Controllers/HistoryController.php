@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    // Публичная часть (показать список)
     public function histories()
     {
         $histories = Article::where('type', 'history')
@@ -17,7 +16,6 @@ class HistoryController extends Controller
         return view('pages.histories', compact('histories'));
     }
 
-    // Публичная часть (показать одну)
     public function history($id)
     {
         $history = Article::where('type', 'history')->findOrFail($id);

@@ -67,7 +67,6 @@ class AdminItemController extends Controller
             'characters.*' => 'exists:characters,id',
         ]);
 
-        // Устанавливаем значения по умолчанию для чекбоксов
         $validated['show_upside'] = $request->has('show_upside');
         $validated['show_downside'] = $request->has('show_downside');
 
@@ -104,7 +103,6 @@ class AdminItemController extends Controller
             'characters.*' => 'exists:characters,id',
         ]);
 
-        // Добавляем значения по умолчанию для чекбоксов
         $validated['show_upside'] = $request->has('show_upside');
         $validated['show_downside'] = $request->has('show_downside');
 

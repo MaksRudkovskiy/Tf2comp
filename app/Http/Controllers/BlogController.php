@@ -12,7 +12,7 @@ class BlogController extends Controller
     {
         $posts = Section::where('type', 'blog')
             ->orderBy('created_at', 'desc')
-            ->paginate(10); // 10 элементов на страницу
+            ->paginate(10);
 
         return view('pages.blog', compact('posts'));
     }

@@ -79,12 +79,12 @@ Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->grou
             ->name('admin.stats.export')
             ->middleware(['auth', EnsureAdminAccess::class]);
 
-        Route::middleware(EnsureAdminAccess::class)->group(function () {
-            Route::prefix('users')->group(function () {
-                Route::get('/', [UsersController::class, 'index'])->name('admin.users');
-                Route::post('/{user}/ban', [UsersController::class, 'ban'])->name('admin.users.ban');
-                Route::post('/{user}/unban', [UsersController::class, 'unban'])->name('admin.users.unban');
-            });
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UsersController::class, 'index'])->name('admin.users');
+            Route::post('/{user}/ban', [UsersController::class, 'ban'])->name('admin.users.ban');
+            Route::post('/{user}/unban', [UsersController::class, 'unban'])->name('admin.users.unban');
+            Route::post('/{user}/make-moderator', [UsersController::class, 'makeModerator'])->name('admin.users.makeModerator');
+            Route::post('/{user}/remove-moderator', [UsersController::class, 'removeModerator'])->name('admin.users.removeModerator');
         });
     });
 

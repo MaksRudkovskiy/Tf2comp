@@ -47,4 +47,24 @@ class UsersController extends Controller
 
         return back()->with('success', 'Пользователь успешно разблокирован');
     }
+
+    public function makeModerator(User $user)
+    {
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $user->update(['role' => User::ROLE_MODERATOR]);
+        return back()->with('success', 'Пользователю выданы права модератора');
+    }
+
+    public function removeModerator(User $user)
+    {
+        if (!auth()->user()->isAdmin()) {
+            abort(403);
+        }
+
+        $user->update(['role' => User::ROLE_USER]);
+        return back()->with('success', 'Права модератора сняты');
+    }
 }

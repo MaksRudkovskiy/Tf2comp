@@ -19,14 +19,13 @@ class Item extends Model
         'modes_id'
     ];
 
-    // Исправляем название метода на characters (множественное число)
     public function characters(): BelongsToMany
     {
         return $this->belongsToMany(
             Character::class,
-            'character_items',  // имя промежуточной таблицы
-            'items_id',         // внешний ключ для текущей модели
-            'characters_id'     // внешний ключ для связанной модели
+            'character_items',
+            'items_id',
+            'characters_id'
         );
     }
 

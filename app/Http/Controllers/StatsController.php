@@ -38,9 +38,8 @@ class StatsController extends Controller
             $dates
         );
 
-        // Изменён запрос для статей
         $articlesData = $this->getDailyStats(
-            Article::query(), // Теперь берём все статьи
+            Article::query(),
             $startDate,
             $endDate,
             $dates
@@ -49,7 +48,7 @@ class StatsController extends Controller
         return view('admin.sections.stats', [
             'usersData' => $usersData,
             'mistakesData' => $mistakesData,
-            'postsData' => $articlesData, // Переименовали переменную для ясности
+            'postsData' => $articlesData,
             'days' => $days
         ]);
     }
@@ -68,7 +67,6 @@ class StatsController extends Controller
             ->pluck('count', 'date')
             ->toArray();
 
-        // Исправленный расчёт накопленной суммы
         $cumulativeSum = 0;
         $result = [];
 
@@ -88,28 +86,23 @@ class StatsController extends Controller
 
     public function exportToWord()
     {
-        $data = $this->getStatsData(); // Получаем те же данные, что и для страницы
+        $data = $this->getStatsData();
 
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
-        // Добавляем заголовок
         $section->addText(
             'Статистика за последние 30 дней',
             ['bold' => true, 'size' => 16],
             ['alignment' => 'center']
         );
 
-        // Добавляем статистику пользователей
         $this->addStatSection($phpWord, $section, 'Регистрации пользователей', $data['usersData']);
 
-        // Добавляем статистику ошибок
         $this->addStatSection($phpWord, $section, 'Сообщенные ошибки', $data['mistakesData']);
 
-        // Добавляем статистику статей
         $this->addStatSection($phpWord, $section, 'Добавленные статьи', $data['articlesData']);
 
-        // Сохраняем документ
         $filename = 'statistics_' . date('Y-m-d') . '.docx';
         header("Content-Description: File Transfer");
         header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -150,7 +143,6 @@ class StatsController extends Controller
             ['alignment' => 'left']
         );
 
-        // Создаем таблицу для данных
         $table = $section->addTable(['borderSize' => 6, 'borderColor' => '000000']);
         $table->addRow();
         $table->addCell(2000)->addText('Дата', ['bold' => true]);

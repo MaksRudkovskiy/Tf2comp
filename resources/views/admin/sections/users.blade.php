@@ -88,16 +88,30 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            @if(!$user->isAdmin()) {{-- Не позволяем блокировать админов --}}
-                            @if($user->isBanned())
-                                <form action="{{ route('admin.users.unban', $user) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="text-green-600 hover:text-green-900">Разблокировать</button>
-                                </form>
-                            @else
-                                <button onclick="showBanForm({{ $user->id }})" class="text-red-600 hover:text-red-900">Заблокировать</button>
-                            @endif
-                            @endif
+                            <div class="flex flex-col space-y-2">
+                                @if(!$user->isAdmin())
+                                @if($user->isBanned())
+                                    <form action="{{ route('admin.users.unban', $user) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="text-green-600 hover:text-green-900">Разблокировать</button>
+                                    </form>
+                                @else
+                                    <button onclick="showBanForm({{ $user->id }})" class="text-red-600 hover:text-red-900 text-left">Заблокировать</button>
+                                @endif
+
+                                @if($user->isModerator())
+                                    <form action="{{ route('admin.users.removeModerator', $user) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="text-yellow-600 hover:text-yellow-800">Снять модератора</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('admin.users.makeModerator', $user) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="text-blue-600 hover:text-blue-800">Сделать модератором</button>
+                                    </form>
+                                @endif
+                                @endif
+                            </div>
                         </td>
                     </tr>
 
@@ -162,16 +176,13 @@
         </div>
     </div>
 
-    <!-- JavaScript для работы формы -->
     <script>
         function showBanForm(userId) {
             const formContainer = document.getElementById('banFormContainer');
             const form = document.getElementById('banForm');
 
-            // Устанавливаем правильный action для формы
             form.action = `/admin/users/${userId}/ban`;
 
-            // Показываем форму
             formContainer.classList.remove('hidden');
             formContainer.classList.add('flex');
         }
@@ -181,11 +192,9 @@
             formContainer.classList.add('hidden');
             formContainer.classList.remove('flex');
 
-            // Очищаем поле ввода
             document.getElementById('ban_reason').value = '';
         }
 
-        // Закрытие формы при клике вне ее области
         document.getElementById('banFormContainer').addEventListener('click', function(e) {
             if (e.target === this) {
                 hideBanForm();
