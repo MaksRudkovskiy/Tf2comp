@@ -2,7 +2,7 @@
 return [
     'status' => [
     'pending' => 'pending',
-    'rejected' => 'rejected',
+    'declined' => 'declined',
     'acknowledged' => 'acknowledged',
     'fixed' => 'fixed'
     ]

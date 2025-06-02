@@ -78,7 +78,14 @@ Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->grou
         Route::get('/admin/stats/export', [StatsController::class, 'exportToWord'])
             ->name('admin.stats.export')
             ->middleware(['auth', EnsureAdminAccess::class]);
-        Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
+
+        Route::middleware(EnsureAdminAccess::class)->group(function () {
+            Route::prefix('users')->group(function () {
+                Route::get('/', [UsersController::class, 'index'])->name('admin.users');
+                Route::post('/{user}/ban', [UsersController::class, 'ban'])->name('admin.users.ban');
+                Route::post('/{user}/unban', [UsersController::class, 'unban'])->name('admin.users.unban');
+            });
+        });
     });
 
     // Маршруты для админов и модераторов

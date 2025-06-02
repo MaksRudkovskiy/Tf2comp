@@ -2,7 +2,7 @@
 return [
     'status' => [
     'pending' => 'На рассмотрении',
-    'rejected' => 'Отклонено',
+    'declined' => 'Отклонено',
     'acknowledged' => 'Принято',
     'fixed' => 'Исправлено'
     ]

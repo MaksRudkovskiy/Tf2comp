@@ -33,6 +33,14 @@
                             Сообщить можно только об одной ошибке в день.
                         </div>
                     @endif
+                    @if(session('error'))
+                        <div x-data="{ show: true }"
+                             x-show="show"
+                             x-init="setTimeout(() => show = false, 3000)"
+                             class="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded">
+                            Ваш аккаунт заблокирован. Вы не можете отправлять сообщения об ошибках.
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -49,7 +57,7 @@
                             @endif
                         </button>
 
-                        <div x-show="isProfileOpen" @click.away="isProfileOpen = false" x-cloak class="absolute left-1/2 transform -translate-x-1/2 mt-4 w-84 border-tf transparency-90 rounded" @if(!request()->has('show_profile')) style="display: none;" @endif>
+                        <div x-show="isProfileOpen" @click.away="isProfileOpen = false" x-cloak class="absolute left-1/2 transform z-40 -translate-x-1/2 mt-4 w-84 border-tf transparency-90 rounded" @if(!request()->has('show_profile')) style="display: none;" @endif>
                             <div class="py-3">
                                 <div class="px-4 text-sm text-center">{{ Auth::user()->email }}</div>
                                 @if(Auth::user()->avatar && strlen(Auth::user()->avatar) > 0)

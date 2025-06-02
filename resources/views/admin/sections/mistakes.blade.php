@@ -13,6 +13,9 @@
                                 <h3 class="font-bold text-lg">
                                     {{ $mistake->user->name ?? 'Аноним' }}
                                 </h3>
+                                <h3 class="text-base font-tf2">
+                                    {{ $mistake->user->email}}
+                                </h3>
                                 <p class="font-tf2 mt-1">{{ \Carbon\Carbon::parse($mistake->date)->format('d.m.Y H:i') }}</p>
                             </div>
                             <div class="flex items-center space-x-2">
@@ -23,7 +26,7 @@
                                             onchange="this.form.submit()"
                                             class="bg-front border border-custom-EBE3CB/30 rounded px-2 py-1 text-sm focus:outline-none focus:border-custom-EBE3CB">
                                         <option value="pending" @selected($mistake->status === 'pending')>Ожидание</option>
-                                        <option value="rejected" @selected($mistake->status === 'rejected')>Отклонено</option>
+                                        <option value="declined" @selected($mistake->status === 'declined')>Отклонено</option>
                                         <option value="acknowledged" @selected($mistake->status === 'acknowledged')>Осведомлены</option>
                                         <option value="fixed" @selected($mistake->status === 'fixed')>Исправлено</option>
                                     </select>

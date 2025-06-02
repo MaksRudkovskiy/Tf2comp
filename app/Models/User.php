@@ -19,6 +19,8 @@ class User extends Authenticatable
         'password',
         'avatar',
         'role',
+        'is_banned',
+        'ban_reason',
     ];
 
     protected $hidden = [
@@ -58,8 +60,18 @@ class User extends Authenticatable
         return $this->role === self::ROLE_MODERATOR;
     }
 
+    public function isBanned(): bool
+    {
+        return $this->is_banned === 1;
+    }
+
     public function hasAccessToAdminPanel(): bool
     {
-        return $this->isAdmin() || $this->isModerator();
+        return ($this->isAdmin() || $this->isModerator()) && !$this->isBanned();
+    }
+
+    public function canSubmitMistakes(): bool
+    {
+        return !$this->isBanned();
     }
 }
