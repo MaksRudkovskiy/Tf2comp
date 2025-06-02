@@ -33,7 +33,7 @@
                             Сообщить можно только об одной ошибке в день.
                         </div>
                     @endif
-                    @if(session('error'))
+                    @if(session('ban'))
                         <div x-data="{ show: true }"
                              x-show="show"
                              x-init="setTimeout(() => show = false, 3000)"

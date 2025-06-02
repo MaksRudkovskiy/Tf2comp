@@ -14,7 +14,7 @@ class MistakeController extends Controller
         }
 
         if (auth()->user()->isBanned()) {
-            return back()->with('error', 'Ваш аккаунт заблокирован. Вы не можете отправлять сообщения об ошибках.');
+            return back()->with('ban', 'Ваш аккаунт заблокирован. Вы не можете отправлять сообщения об ошибках.');
         }
 
         $alreadySubmitted = Mistake::where('user_id', auth()->id())
