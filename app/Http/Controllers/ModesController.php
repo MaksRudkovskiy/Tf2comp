@@ -64,7 +64,7 @@ class ModesController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:25',
+            'title' => 'required|string|max:45',
             'text' => 'required|string',
         ]);
 
@@ -89,7 +89,7 @@ class ModesController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:25',
+            'title' => 'required|string|max:45',
             'text' => 'required|string',
         ]);
 
