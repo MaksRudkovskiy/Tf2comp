@@ -2,7 +2,16 @@
     <x-slot name="pageTitle">Статистика за последние {{ $days }} дней</x-slot>
 
     <div class="w-3/4 mx-auto my-10 space-y-12">
-        <!-- График пользователей -->
+
+        <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center">
+                <a href="{{ route('admin.stats.export') }}?type=users"
+                   class="px-4 py-2 bg-front rounded border-tf hover:text-custom-text-hover">
+                    Экспорт в Word
+                </a>
+            </div>
+        </div>
+
         <div class="bg-front border-tf rounded-lg p-6">
             <h2 class="text-2xl mb-4">Регистрации пользователей</h2>
             <div class="flex gap-4 mb-4">
@@ -12,7 +21,6 @@
             <canvas id="usersChart" height="100"></canvas>
         </div>
 
-        <!-- График ошибок -->
         <div class="bg-front border-tf rounded-lg p-6">
             <h2 class="text-2xl mb-4">Сообщенные ошибки</h2>
             <div class="flex gap-4 mb-4">
@@ -22,7 +30,6 @@
             <canvas id="mistakesChart" height="100"></canvas>
         </div>
 
-        <!-- График статей -->
         <div class="bg-front border-tf rounded-lg p-6">
             <h2 class="text-2xl mb-4">Добавленные статьи</h2>
             <div class="flex gap-4 mb-4">
@@ -32,6 +39,8 @@
             <canvas id="articlesChart" height="100"></canvas>
         </div>
     </div>
+
+
 
     <script>
         // Глобальные переменные для хранения данных

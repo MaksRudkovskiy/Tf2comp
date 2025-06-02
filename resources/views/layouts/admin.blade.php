@@ -107,6 +107,11 @@
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/stats.svg')}}" alt="Ошибки">
                     <p class="text-center font-tf2 text-sm mt-1">Статы</p>
                 </a>
+
+                <a href="{{ route('admin.users') }}" class="group @if($isActive('admin.users')) opacity-100 @else opacity-50 @endif">
+                    <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/users.svg')}}" alt="Ошибки">
+                    <p class="text-center font-tf2 text-sm mt-1">Учётки</p>
+                </a>
             </div>
             @else
 

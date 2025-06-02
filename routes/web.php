@@ -3,7 +3,7 @@
 use App\Http\Controllers\{ItemController, BugsController, CharacterController, MainController,
     ProfileController, ModesController, MistakeController, ChangesController,
     BlogController, HistoryController, ConsoleController, AdminController, AdminItemController,
-    StatsController};
+    StatsController, UsersController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureAdminAccess;
 use App\Http\Middleware\EnsureModeratorAccess;
@@ -75,6 +75,10 @@ Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->grou
         });
 
         Route::get('/stats', [StatsController::class, 'index'])->name('admin.stats');
+        Route::get('/admin/stats/export', [StatsController::class, 'exportToWord'])
+            ->name('admin.stats.export')
+            ->middleware(['auth', EnsureAdminAccess::class]);
+        Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
     });
 
     // Маршруты для админов и модераторов
