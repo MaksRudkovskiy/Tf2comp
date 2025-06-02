@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     <script src="//unpkg.com/alpinejs" defer></script>
+
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -98,11 +99,21 @@
             </div>
 
             {{$slot}}
+
+            <div class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-front flex flex-col rounded-r-sm py-5 gap-y-2.5 z-10 border-tf md:w-20 w-16">
+
+
+                <a href="{{ route('admin.stats') }}" class="group @if($isActive('admin.stats')) opacity-100 @else opacity-50 @endif">
+                    <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/stats.svg')}}" alt="Ошибки">
+                    <p class="text-center font-tf2 text-sm mt-1">Статы</p>
+                </a>
+            </div>
         </div>
 
     </div>
 </main>
 @include('components.footer')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 </html>

@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\{ItemController, BugsController, CharacterController, MainController,
     ProfileController, ModesController, MistakeController, ChangesController,
-    BlogController, HistoryController, ConsoleController, AdminController, AdminItemController};
+    BlogController, HistoryController, ConsoleController, AdminController, AdminItemController,
+    StatsController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureAdminAccess;
 use App\Http\Middleware\EnsureModeratorAccess;
@@ -72,6 +73,8 @@ Route::middleware(['auth', EnsureModeratorAccess::class])->prefix('admin')->grou
             Route::put('/{mistake}', [MistakeController::class, 'update'])->name('admin.mistakes.update');
             Route::delete('/{mistake}', [MistakeController::class, 'destroy'])->name('admin.mistakes.destroy');
         });
+
+        Route::get('/stats', [StatsController::class, 'index'])->name('admin.stats');
     });
 
     // Маршруты для админов и модераторов

@@ -88,4 +88,6 @@
             </form>
         </div>
     </div>
+
+    <script src="{{asset('js/CharacterPreviewChange.js')}}"></script>
 </x-admin-layout>
