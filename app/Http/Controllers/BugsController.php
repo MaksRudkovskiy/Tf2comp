@@ -51,7 +51,7 @@ class BugsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:4s5',
+            'title' => 'required|string|max:45',
             'text' => 'required|string',
         ]);
 

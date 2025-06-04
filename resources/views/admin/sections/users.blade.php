@@ -1,5 +1,7 @@
 <x-admin-layout>
 
+    <x-slot name="pageTitle">Список пользователей</x-slot>
+
     <div class="mx-auto w-3/4 py-8">
         <!-- Поиск -->
         <div class="bg-front border-tf rounded-lg p-6 mb-6">

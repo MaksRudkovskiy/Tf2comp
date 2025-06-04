@@ -41,6 +41,6 @@ class MistakeControllerTest extends TestCase
 
         // 5. Альтернативная проверка даты
         $mistake = Mistake::first();
-        $this->assertNotNull($mistake->date);
+        $this->assertNotNull($mistake->created_at);
     }
 }

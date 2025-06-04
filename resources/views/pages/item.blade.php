@@ -40,7 +40,7 @@
                             @if($item->image_path)
                                 <img src="{{ asset('storage/' . $item->image_path) }}"
                                      alt="{{ $item->name }}"
-                                     class="max-h-full max-w-full">
+                                     class="max-h-[100px]  max-w-[100px]">
                             @endif
                         </a>
                     @empty
