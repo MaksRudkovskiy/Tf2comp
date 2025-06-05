@@ -105,3 +105,8 @@ input[type="file"] {
     white-space: nowrap;
     border-width: 0;
 }
+
+input[type="text"]
+{
+    border-color: black;
+}
