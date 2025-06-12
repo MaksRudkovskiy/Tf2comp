@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             ModesSeeder::class,
             ConsoleSeeder::class,
+            UserSeeder::class,
+            MistakeSeeder::class,
         ]);
 
 

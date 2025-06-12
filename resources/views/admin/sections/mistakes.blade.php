@@ -16,7 +16,7 @@
                                 <h3 class="text-base font-tf2">
                                     {{ $mistake->user->email}}
                                 </h3>
-                                <p class="font-tf2 mt-1">{{ \Carbon\Carbon::parse($mistake->date)->format('d.m.Y H:i') }}</p>
+                                <p class="font-tf2 mt-1">{{ \Carbon\Carbon::parse($mistake->created_at)->format('d.m.Y H:i') }}</p>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <form method="POST" action="{{ route('admin.mistakes.update', $mistake) }}">
