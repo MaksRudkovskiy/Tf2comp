@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -53,7 +54,13 @@ class HistorySeeder extends Seeder
         ];
 
         foreach ($articles as $article) {
-            Article::create($article);
+            // Генерируем случайную дату за последний месяц
+            $randomDate = Carbon::now()->subDays(rand(0, 30))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
+
+            Article::create(array_merge($article, [
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate,
+            ]));
         }
     }
 
