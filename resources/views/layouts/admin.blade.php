@@ -81,21 +81,25 @@
                     <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/console.svg')}}" alt="Консоль">
                     <p class="text-center font-tf2 text-sm mt-1">Консоль</p>
                 </a>
+                @if(Auth::user()->id == 1)
+                    <a href="{{ route('admin.changes') }}" class="group @if($isActive('admin.changes')) opacity-100 @else opacity-50 @endif">
+                        <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/changes.svg')}}" alt="Изменения">
+                        <p class="text-center font-tf2 text-sm mt-1">Изменения</p>
+                    </a>
 
-                <a href="{{ route('admin.changes') }}" class="group @if($isActive('admin.changes')) opacity-100 @else opacity-50 @endif">
-                    <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/changes.svg')}}" alt="Изменения">
-                    <p class="text-center font-tf2 text-sm mt-1">Изменения</p>
-                </a>
+                    <a href="{{ route('admin.blog') }}" class="group @if($isActive('admin.blog')) opacity-100 @else opacity-50 @endif">
+                        <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/blog.svg')}}" alt="Блог">
+                        <p class="text-center font-tf2 text-sm mt-1">Блог</p>
+                    </a>
 
-                <a href="{{ route('admin.blog') }}" class="group @if($isActive('admin.blog')) opacity-100 @else opacity-50 @endif">
-                    <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/blog.svg')}}" alt="Блог">
-                    <p class="text-center font-tf2 text-sm mt-1">Блог</p>
-                </a>
+                    <a href="{{ route('admin.mistakes') }}" class="group @if($isActive('admin.mistakes')) opacity-100 @else opacity-50 @endif">
+                        <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/mistakes.svg')}}" alt="Ошибки">
+                        <p class="text-center font-tf2 text-sm mt-1">Ошибки</p>
+                    </a>
 
-                <a href="{{ route('admin.mistakes') }}" class="group @if($isActive('admin.mistakes')) opacity-100 @else opacity-50 @endif">
-                    <img class="mx-auto group-hover:scale-110 transition-transform" src="{{asset('content/img/icons/mistakes.svg')}}" alt="Ошибки">
-                    <p class="text-center font-tf2 text-sm mt-1">Ошибки</p>
-                </a>
+                    @else
+
+                @endif
             </div>
 
             {{$slot}}
